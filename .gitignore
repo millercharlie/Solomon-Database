@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Build output
+dist/
+
+# Editor/OS
+.DS_Store
+.vscode/
+
+# MongoDB local data (if you ever run mongod with a local dbpath)
+data/db/
