@@ -1,4 +1,4 @@
-import { IResource, Resources } from '../models/Resource';
+import { IResource, Resources } from '../models/Resources';
 
 interface SolomonDao {
   getAllResources(): Promise<IResource[]>;

@@ -10,7 +10,8 @@
     "build": "tsc",
     "start": "node dist/src/index.js",
     "dev": "tsx watch src/index.ts",
-    "seed": "tsx seed.ts"
+    "seed": "tsx seed.ts",
+    "start-db": "tsx app.ts"
   },
   "dependencies": {
     "@apollo/server": "^5.5.1",
@@ -23,6 +24,7 @@
     "mongoose": "^9.7.4"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.1",
     "tsx": "^4.22.3",
