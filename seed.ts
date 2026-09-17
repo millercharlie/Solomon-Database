@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
-import { Resources } from './models/Resources.ts';
+import { MiscLinks, Resources } from './models/Resources.ts';
 import resources from './data/resources.js';
+import miscLinks from './data/miscLinks.js';
 
 /**
  * Seed function to restart MongoDB
@@ -16,9 +17,11 @@ const seed = async () => {
 
   await mongoose.connect(uri);
   await Resources.deleteMany({});
+  await MiscLinks.deleteMany({});
 
   // Insert all resources
   await Resources.insertMany(resources);
+  await MiscLinks.insertMany(miscLinks);
   await mongoose.disconnect();
 };
 
