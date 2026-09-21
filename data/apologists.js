@@ -5,7 +5,7 @@ export default [
     type: 'person',
     color: '#00679A',
     shortDesc: 'Reformed Theologian focusing on apologetics, debates, and more',
-    categories: ['theology_intro', 'deeper_apologetics'],
+    tags: ['theology_intro', 'deeper_apologetics'],
     badges: [
       'video',
       'website',
@@ -64,7 +64,7 @@ export default [
       'Gavin Ortlund (PhD, Fuller Theological Seminary) is President of Truth Unites, Visiting Professor of Historical Theology at Phoenix Seminary, and Theologian-in-Residence at Immanuel Nashville. He is also an Evangelical theologian and content creator focusing on Christian doctrine, with a particular emphasis on the historical church.\n\nHis content includes refuting particular doctrines, such as the Papacy, responding to other theologions such as C.S. Lewis and Trent Horn, and defending Evangelical and Protestant beliefs, such as Sola Scriptura. All of his content is available for free on YouTube and other podcast sites, and he also sells books online.',
     color: '#104b88',
     badges: ['video', 'podcast', 'website', 'apologetics', 'theology'],
-    categories: ['theology_intro', 'deeper_apologetics'],
+    tags: ['theology_intro', 'deeper_apologetics'],
     api: {
       platform: 'youtube',
       queryParam: 'TruthUnites',
@@ -138,7 +138,7 @@ export default [
       'theology',
       'ministry',
     ],
-    categories: ['theology_intro', 'deeper_apologetics'],
+    tags: ['theology_intro', 'deeper_apologetics'],
     links: [
       {
         platform: 'personal',
@@ -161,7 +161,7 @@ export default [
     longDesc:
       'Lee Strobel became convinced of the truthfullness of Christianity after diving into reserach to disprove his wife, who is Chritian. Subsequently, he became an outspoken apologist and theologian, and is known for writing books such as "The Case for Christ"',
     badges: ['website', 'book', 'apologetics'],
-    categories: ['deeper_apologetics'],
+    tags: ['deeper_apologetics'],
     links: [
       {
         platform: 'personal',
@@ -201,7 +201,7 @@ export default [
     shortDesc: '"Think Biblically About Everything"',
     longDesc: '...',
     badges: ['video', 'podcast', 'apologetics', 'theology'],
-    categories: ['theology_intro'],
+    tags: ['theology_intro'],
     api: {
       platform: 'youtube',
       queryParam: 'MikeWinger',

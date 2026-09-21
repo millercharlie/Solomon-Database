@@ -41,11 +41,13 @@ export enum platforms {
   'spotify',
   'applepodcasts',
   'patreon',
+  'book',
   'books',
   'article',
   'scholarly_article',
   'youversion',
   'donate',
+  'playlist',
   'solomon',
   'question',
 }

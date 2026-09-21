@@ -4,6 +4,7 @@ import {
   findCategoryById,
   getCategoriesByPageAndType,
   getDashboardRows,
+  getGlossaryData,
   getTheologyData,
   getTopicData,
 } from './pageLogic';
@@ -37,6 +38,9 @@ class SolomonDaoImplementation implements SolomonDao {
   }
   async getTheology(): Promise<IPage> {
     return getTheologyData();
+  }
+  async getGlossary(): Promise<IPage> {
+    return getGlossaryData();
   }
 
   async getTopic(topicId: string): Promise<IPage> {

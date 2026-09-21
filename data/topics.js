@@ -7,7 +7,7 @@ export default [
     shortDesc:
       'Discusses Jesus Christ, the Son and second person of the Trinity.',
     longDesc:
-      'Jesus of Nazareth is the most consequential figure in history. He has been called many things by many people, but to Christians He is the risen Christ, the Messiah, who came to judge the living and the dead. Jesus Christ died, was buried, and rose again on the third day to forgive our sins and reconcile us to the Father. But, is the Christian perspective correct? Who is Jesus?',
+      "Jesus of Nazareth is the most consequential figure in history. He has been called many things by many people, but to Christians He is the risen Christ, the Messiah, who came to judge the living and the dead. Jesus Christ died, was buried, and rose again on the third day to forgive our sins and reconcile us to the Father. But, is the Christian perspective correct? Who is Jesus?\n\nIn this page, I've compiled some resources to answer your theological questions about Christ, in addition to some other apologetics resources about His life.",
     rows: [
       {
         _id: 'row1',
@@ -17,19 +17,18 @@ export default [
             _id: 'Jesus_dual_nature',
             name: 'The Dual Nature of Jesus',
             type: 'theology',
-            shortDesc:
-              'Jesus is both fully God and fully Man. How is this possible?',
+            shortDesc: 'Explores Jesus as being both fully God and fully Man.',
             links: [], // Links here are compiled during runtime
           },
           {
             _id: 'Jesus_ministry',
-            name: "Jesus's Ministry",
+            name: "Jesus' Ministry",
             type: 'topic',
             links: [],
           },
           {
             _id: 'Jesus_birth',
-            name: "Jesus's Birth",
+            name: "Jesus' Birth",
             type: 'topic',
             shortDesc:
               'Jesus was born by a virgin and conceived by the Holy Spirit.',
@@ -40,404 +39,221 @@ export default [
             name: 'The Parables',
             type: 'topic',
             shortDesc:
-              'Jesus loved teaching in the form of parables, or illustrative stories that contain theological meaning.',
+              'Jesus loved teaching in the form of stories that contain theological meaning.',
+            links: [],
+          },
+        ],
+      },
+    ],
+    sub: ['Jesus_resurrection', 'christophanies', 'crucifixion', 'atonement'],
+    related: ['trinity', 'acts', 'gospel', 'revelation'],
+  },
+
+  {
+    _id: 'Jesus_resurrection',
+    title: 'The Resurrection of Jesus Christ',
+    pageType: 'topic',
+    color: '#d4d4d4',
+    shortDesc:
+      'Explores the historical and theological resurrection of Jesus Christ',
+    longDesc:
+      "The resurrection of Jesus Christ is the most consequential event in human history. It is the single historic event that Christianity's credibility is dependent on (1 Corinthians 15:14). For many, this one event is a stumbling block to accepting Christ as Lord, while others have grown up believing this event.\n\nBut, what is the evidence for the resurrection of Christ? Are there alternative theories about the beginnings of Christianity? Resources in this page include discussing the theology behind the resurrection in addition to apologetics resources regarding evidence of the resurrection.",
+    rows: [],
+    related: ['Jesus', 'crucifixion', 'atonement'],
+  },
+
+  {
+    _id: 'crucifixion',
+    title: 'The Crucifixion of Jesus Christ',
+    pageType: 'topic',
+    color: '#7a7a7a', // TODO: Maybe the color here could be some sort of "highlight" color in each page for differentiation?
+    shortDesc: 'Discusses the brutal death of Christ on the cross.',
+    longDesc:
+      "The death of Jesus Christ by crucifixion is one of the most sure facts of history. Nearly every scholar, be skeptic or Christian, acknowledges the historical accuracy of this event. Christians believe this death was the crux of God's ultimate plan for the salvation of the world.\n\nBut, did Jesus really die this way? What evidence is there for this event? This page houses resources to answer your questions about the death of Jesus Christ.",
+    rows: [],
+    related: ['Jesus', 'atonement', 'crucifixion', 'Jesus_resurrection'],
+  },
+
+  {
+    _id: 'christophanies',
+    title: 'Christophanies',
+    pageType: 'topic',
+    color: '#e88cc7',
+    shortDesc: 'Discusses manifestations of Jesus Christ in the Old Testament.',
+    longDesc:
+      'Given the nature of Jesus as being God, scholars and Christians have sought to answer whether or not Jesus revealed Himself to figures in the Old Testament. These manifestations of Jesus are called "Christophanies". Examples may include the "angel of the Lord" and the burning bush that Moses talked to.',
+    rows: [],
+    related: ['Jesus', 'ot'],
+  },
+
+  {
+    _id: 'atonement',
+    title: 'The Atonement',
+    pageType: 'topic',
+    color: '#45d5f5',
+    shortDesc:
+      "There are various theories which explain what was accomplished during Jesus's death and resurrection.",
+    longDesc:
+      'The impact of the death and resurrection of Jesus Christ for the forgiveness of sins has various interpretations by scholars. These atonement theories do not necessarily contradict each other.\n\nPenal Substitutionary Atonement (PSA) is the most popular atonement theory in the United States, while some such as Christus Victor, Ransom Theory, and Recapitulation are other interpretations of the atoning work of Christ.\n\nBut, what do these atonement theories mean? How are they different? Are they all correct? This page houses resources about each mainstream atonement theory and discusses differences among them.',
+    rows: [],
+    related: ['Jesus', 'crucifixion'],
+  },
+
+  {
+    _id: 'trinity',
+    title: 'The Trinity',
+    pageType: 'topic',
+    color: '#fdb913',
+    shortDesc: 'Discusses God as one being in three persons.',
+    longDesc:
+      'Christians have historically believed that God was triune-or one being in three persons; The Father, the Son (Jesus Christ) and the Holy Spirit. For some, this seeming logical contradiction has been a stumbling block in faith. Many false teachings about the Trinity can be made very easily, such as Modalism, Arianism, and Partialism.\n\nBut, how can we comprehend the Trinity? What does it mean for our faith? Did God actually reveal Himself as three distinct persons in Scripture? This page contains a comprehensive list of resources to help you understand this complex topic.',
+    rows: [],
+    sub: ['Jesus', 'God_Father', 'Holy_Spirit', 'Christophanies'],
+    related: ['God', 'pauline_letters', 'john'],
+  },
+
+  {
+    _id: 'acts',
+    title: 'The Acts of the Apostles',
+    pageType: 'topic',
+    color: '#ec3636',
+    shortDesc:
+      'Recounts the early church immediately following the resurrection of Jesus Christ.',
+    longDesc:
+      'In the Acts of the Apostles (commonly shortened to "Acts"), Luke gives a detailed account of the early church immediately following the death and resurrection of Jesus Christ. He writes about the spread of Christianity and highlights Saul of Tarsus\'s conversion to Christianity following a supernatural encounter with the risen Christ on the road to Damascus.\n\nThis page houses commentary for select topics of the book, in addition to general Bible commentary ministries and platforms that write about Acts.',
+    rows: [],
+    related: ['gospels', 'pentecost', 'paul', 'peter'],
+  },
+
+  {
+    _id: 'revelation',
+    title: 'The Revelation',
+    pageType: 'topic',
+    color: '#83a952',
+    shortDesc: "John's end-times vision given by Christ.",
+    longDesc:
+      "The Book of Revelation reveals John's vision of Christ while in exile on the island of Patmos. Jesus gives instructions to seven churches, but more famously details the end-times (or eschatology). The book is understandably a difficult read for many people, with many interpretations existing surrounding the final events of Judgement.\n\nBut what are these different views? How can we understand the Revelation? I've gathered resources here to answer any questions you may have around this difficult book.",
+    rows: [],
+    related: ['nt', 'judgement', 'end_times'],
+  },
+
+  {
+    _id: 'gospel',
+    title: 'The Gospel',
+    pageType: 'topic',
+    color: '#ff9839',
+    shortDesc:
+      'Jesus Christ died and was resurrected for the forgiveness of our sins.',
+    longDesc:
+      'The word "Gospel" literally means "Good News". It is the news that Jesus Christ died and was resurrected for the forgiveness of our sins. He is risen!\n\nBut wait, what exactly is the Gospel? This page is dedicated to the theology of the Gospel. If you wish to find resources regarding the Gospel books (Matthew, Mark, Luke, John), search "Gospels" above. This page has some resources relating to these books, but focuses on the Gospel message itself.',
+    rows: [],
+    related: ['gospels', 'atonement', 'crucifixion', 'Jesus'],
+  },
+
+  {
+    _id: 'gospels',
+    title: 'The Gospels',
+    pageType: 'topic',
+    color: '',
+    shortDesc:
+      'The Gospels describe the life, ministry, death, and resurrection of Jesus Christ',
+    longDesc:
+      'The Gospels (Matthew, Mark, Luke, and John) are four books in the New Testament that illustrate the life, ministry, death, and resurrection of Jesus Christ. Each author wrote to specific audiences and contexts, and thus each Gospel contains unique stories about Jesus not found in the others.\n\nThe Gospels are a common target of skeptical scholars and individuals, as discrediting the Gospels strikes at the core of Christian doctrine and faith. But are they right? Are the Gospels a-historic and not representative of the real events of Jesus? Did the claimed authors even write them?\n\nThis page contains primarily apologetics content relating to the truth of the Gospel accounts. Here, you will find resources about the historicity of the Gospels, defenses of their credibility, and a deeper look at their theology. If you wish to learn more about the Gospel message itself, please check out Solomon\'s page entitled "The Gospel" for more information.',
+    rows: [
+      {
+        _id: 'row1',
+        type: 'list',
+        content: [
+          {
+            _id: 'gospels_intro',
+            name: 'What are the Gospels?',
+            type: 'question',
+            links: [],
+          },
+          {
+            _id: 'bibleproject_gospel_summary',
+            name: 'BibleProject Gospel Summary',
+            type: 'commentary',
+            links: [],
+          },
+          {
+            _id: 'gospels_accuracy',
+            name: 'Historical Accuracy',
+            type: 'apologetics',
+            links: [],
+          },
+          {
+            _id: 'gospels_contradictions',
+            name: 'Supposed Contradictions',
+            shortDesc: 'Debunks "contradictions" within the Gospel accounts',
+            type: 'apologetics',
             links: [],
           },
         ],
       },
       {
-        _id: 'sub',
+        _id: 'gospel_apologists',
+        title: 'Gospel Apologists',
         type: 'card',
         content: [
-          'Jesus_resurrection',
-          'christophanies',
-          'crucifixion',
-          'atonement',
-        ], // TODO: Maybe this will just be IDs? Also calculated at runtime? This would assume many topics have a "Sub-Topic" category
+          'inspiringphilosophy',
+          'wes_huff',
+          'mike_winger',
+          'gavin_ortlund',
+        ],
+      },
+    ],
+    related: ['bible_accuracy', 'Jesus', 'Jesus_resurrection', 'crucifixion'],
+    sub: ['matthew', 'mark', 'luke', 'john'],
+  },
+
+  {
+    _id: 'pauline_letters',
+    title: 'The Letters of Paul',
+    pageType: 'topic',
+    color: '#AC2121',
+    shortDesc:
+      'Illustrates the 13 letters Paul wrote to various churches and Christians during his ministry.',
+    longDesc:
+      "Paul wrote a majority of the New Testament in the form of letters to various churches and Christians. His work was instrumental in bringing the Gospel to the Gentiles. This topic includes all of Paul's letters.",
+    rows: [
+      {
+        _id: 'pauline_letters_churches',
+        name: "Paul's Letters to the Churches",
+        type: 'card',
+        content: [
+          'romans',
+          '1_corinthians',
+          '2_corinthians',
+          'galatians',
+          'ephesians',
+          'philippians',
+          'colossians',
+          '1_thessalonians',
+          '2_thessalonians',
+        ],
+      },
+      {
+        _id: 'pauline_letters_individuals',
+        name: "Paul's Letters to Individuals",
+        type: 'card',
+        content: ['1_timothy', '2_timothy', 'titus', 'philemon'],
       },
       {
         _id: 'related',
         type: 'card',
-        content: ['trinity', 'acts', 'gospels', 'revelation'],
-      },
-    ],
-  },
-  {
-    _id: 'Jesus',
-    name: 'Jesus Christ',
-    type: 'topic',
-    color: '#FDB913',
-    shortDesc:
-      'Discusses Jesus Christ, the Son and second person of the Trinity.',
-    longDesc:
-      'Jesus of Nazareth is the most consequential figure in history. He has been called many things by many people, but to Christians He is the risen Christ, the Messiah, who came to judge the living and the dead. Jesus Christ died, was buried, and rose again on the third day to forgive our sins and reconcile us to the Father. But, is the Christian perspective correct? Who is Jesus?',
-    badges: ['topic', 'apologetics', 'theology', 'commentary'],
-    links: [],
-    categories: ['God'],
-  },
-  // TODO: One day, there could be a youtube playlist card
-  {
-    _id: 'Holy_Spirit',
-    name: 'Holy Spirit',
-    type: 'topic',
-    color: '#FDB913',
-    shortDesc: 'Discusses the Holy Spirit, the third person of the Trinity.',
-    longDesc: '...',
-    badges: ['topic', 'apologetics', 'theology', 'commentary'],
-    links: [],
-    categories: ['God'],
-  },
-  {
-    _id: 'resurrection',
-    name: 'The Resurrection of Jesus',
-    type: 'topic',
-    color: '#DFCF9F',
-    shortDesc: 'Did Jesus really rise from the dead?',
-    longDesc:
-      "Jesus of Nazareth is the most important figure in human history. He claimed to be the unique Son of God and the Messiah of the world. The Bible records accounts of his triumphant resurrection. But can a man really rise from the dead? Are the claims about Jesus's resurrection true?",
-    badges: ['topic', 'question', 'apologetics', 'theology'],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUYymBPce08oyuhnHLLkR_B&si=F-l8fR4dJ7EqlE9q',
-        displayText: 'InspiringPhilosophy - The Resurrection of Jesus',
-      },
-      {
-        platform: 'scholarly_article',
-        url: 'https://ntwrightpage.com/2016/07/12/jesus-resurrection-and-christian-origins/',
-        displayText: "N.T. Wright - Jesus' Resurrection and Christian Origins",
-      },
-    ],
-  },
-  {
-    _id: 'stars',
-    name: 'The Stars',
-    type: 'topic',
-    color: '#7d6e96',
-    shortDesc:
-      'Explores the nature of the stars through a Christian worldview.',
-    longDesc: '...',
-    badges: ['topic', 'theology'],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtu.be/pey9uQna2U4?si=KVDn0Wk5PiGKlrKB',
-        displayText: 'Gavin Ortlund - The Stars',
-      },
-    ],
-    categories: ['theology_intro'],
-  },
-  {
-    _id: 'paul',
-    name: 'Who was Paul the Apostle',
-    type: 'topic',
-    color: '#A32D13',
-    shortDesc: 'Describes the life and ministry of Saul of Tarsus (later Paul)',
-    longDesc:
-      'Many claims have been made about the man Saul of Tarsus. Some hold that he was the "inventor" of Christianity, while others believe him to have been a secret Roman spy. But who was Saul of Tarsus really? Did he really have a miraculous conversion at Damascus? What did he (now Paul) actually write about?',
-    badges: [
-      'topic',
-      'question',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtu.be/rfysCq8XOS4?si=hMSxe6DdInjEq9UW',
-        displayText:
-          'InspiringPhilosophy - Could Paul Arrest Christians in Damascus?',
-      },
-      {
-        platform: 'books',
-        url: 'https://www.christianbook.com/paul-a-biography-n-t-wright/9780061730580/pd/1730580?event=BRSRCG%7CPSEN',
-        displayText: 'N.T. Wright - Paul: A Biography',
-      },
-    ],
-  },
-  {
-    _id: 'synoptic_gospels',
-    name: 'The Synoptic Gospels',
-    type: 'topic',
-    color: '#AC2121',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'gospel',
-    name: 'The Gospel',
-    type: 'topic',
-    color: '#FDB913',
-    shortDesc:
-      'The Gospel is the amazing news that Jesus Christ died for our sins and was resurrected.',
-    longDesc:
-      'The Gospel ("good news") is the truth that Jesus Christ died for the forgiveness of our sins and was resurrected. There were four gospels written (Matthew, Mark, Luke, John). But, what exactly does this "Gospel" mean? Are these documents reliable history? This topic houses resources to answer all of your questions about the Gospel.',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'isaiah',
-    name: 'Isaiah',
-    type: 'topic',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'daniel_prophecies',
-    name: 'The Prophecies of Daniel',
-    type: 'topic',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'luke',
-    name: 'Luke the Evangelist',
-    type: 'topic',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'john_apostle',
-    name: 'Who was John the Apostle?',
-    type: 'topic',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'revelation',
-    name: 'The Revelation',
-    type: 'topic',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'pauline_letters',
-    name: 'The Letters of Paul',
-    type: 'topic',
-    color: '#AC2121',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'christophanies',
-    name: 'Christophanies',
-    type: 'topic',
-    shortDesc:
-      'Dives into the reliability and truth of Matthew, Mark, and Luke',
-    longDesc:
-      'The Synoptic Gospels (Matthew, Mark, and Luke) are 1st century accounts that describe the life and ministry of Jesus of Nazareth. Some skeptical scholars question the truthfullness of the synoptics, largely from presuppositions about the Resurrection being false. But do their claims have any merit? Are there contradictions in the Synoptic Gospels? Were they really written by Matthew, Mark, and Luke?',
-    badges: [
-      'topic',
-      'video',
-      'scholarly_article',
-      'article',
-      'book',
-      'apologetics',
-      'theology',
-    ],
-    categories: ['God'],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-  },
-  {
-    _id: 'trinity',
-    name: 'The Trinity',
-    type: 'topic',
-    color: '#A9A247',
-    shortDesc:
-      'The Trinity is the true God in the form of three, co-equal persons.',
-    longDesc:
-      'The Trinity is the true God in the form of three, co-equal persons: the Father, the Son, and the Holy Spirit. It cannot be explained by human metaphors or worldly aspects, and each person of the Trinity is eternal, 100% God, and have different functions in the Bible. But, what exactly is the Trinity? Is it possible to wrap our heads around the nature of God?',
-    badges: ['topic', 'theology', 'apologetics'],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0&si=Cu7ZH5MqbqOr2LbV',
-        displayText: 'InspiringPhilosophy - The Reliability of the Gospels',
-      },
-    ],
-    categories: ['theology_intro', 'God'],
-  },
-  {
-    _id: 'ot',
-    name: 'The Old Testament',
-    type: 'topic',
-    color: '#AB9266',
-    shortDesc: '...',
-    longDesc: '...',
-    badges: ['topic', 'theology', 'apologetics', 'commentary'],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'placeholder',
-        displayText: 'placeholder',
-      },
-    ],
-  },
-  {
-    _id: 'nt',
-    name: 'The New Testament',
-    type: 'topic',
-    color: '#39ded0',
-    shortDesc:
-      'Follows the life, ministry, death, and resurrection of Jesus in addition to the early Church.',
-    longDesc:
-      'The New Testament is best known for the Gospels, which include the good news that Jesus is risen! However, there are many other books in the New Testament too that take place after the ascension of Jesus to heaven. The New Testament follows the journey of the early church, beginning with the book of the Acts of the Apostles and ending with The Revelation of the end of the world.',
-    badges: ['topic', 'theology', 'apologetics', 'commentary'],
-    links: [
-      {
-        platform: 'youtube',
-        url: 'placeholder',
-        displayText: 'placeholder',
+        content: ['2_peter', 'acts', 'gospels', 'Jesus_resurrection'],
       },
     ],
   },
 ];
+
+// {
+//   _id: '',
+//   title: '',
+//   pageType: 'topic',
+//   color: '#ffffff',
+//   shortDesc: '',
+//   longDesc: '',
+//   rows: [],
+// },

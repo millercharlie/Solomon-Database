@@ -7,7 +7,7 @@ export default [
       'Discusses whether the flood mentioned in Genesis literally covered the globe or was localized to the Middle-East',
     displayText: "Noah's Flood: Global or Local?",
     icon: 'solomon.svg',
-    categories: ['topics_popular'],
+    tags: ['topics_popular'],
   },
   {
     _id: 'inspiringphilosophy_bible_contradiction_one_link',
@@ -16,7 +16,7 @@ export default [
     url: 'https://youtu.be/rrECsDrbVkA?si=B0m4kyCl3dCkImW0',
     tooltip:
       'InspiringPhilosophy debunks a supposed Bible contradiction about where Jesus went after his birth.',
-    categories: ['Jesus_birth'],
+    tags: ['Jesus_birth', 'gospels_contradictions', 'bible_contradictions'],
   },
   {
     _id: 'yec_v_oec_link',
@@ -25,7 +25,7 @@ export default [
     url: 'www.wisdomofsolomon.org/topic/yec_v_oec',
     tooltip: 'How long did it take God to create the Heavens and the Earth?',
     icon: 'solomon.svg',
-    categories: ['topics_popular'],
+    tags: ['topics_popular'],
   },
   {
     _id: 'garden_of_eden_link',
@@ -35,7 +35,7 @@ export default [
     tooltip:
       'Discusses the Biblical account of the Garden of Eden found in Genesis',
     icon: 'youtube.svg',
-    categories: ['topics_popular'],
+    tags: ['topics_popular'],
   },
   {
     _id: 'isaiah_prophecies_link',
@@ -45,7 +45,7 @@ export default [
     tooltip:
       'The Book of Isaiah was written centuries before the birth of Jesus Christ, yet it contains many fulfilled prophecies',
     icon: 'solomon.svg',
-    categories: ['topics_popular'],
+    tags: ['topics_popular'],
   },
   {
     _id: 'luke_link',
@@ -55,7 +55,7 @@ export default [
     tooltip:
       'Discusses Luke the Evangelist, who wrote the Gospel According to Luke as well as the Acts of the Apostles',
     icon: 'solomon.svg',
-    categories: [],
+    tags: [],
   },
   {
     _id: 'mike_winger_christophanies_link',
@@ -63,7 +63,7 @@ export default [
     url: 'https://youtu.be/1CDOSbzd6Uk?si=cEnf3tw5kNjIo4JZ',
     displayText: 'Mike Winger \u2013 Examples of Christophanies',
     icon: 'youtube.svg',
-    categories: ['christophanies'],
+    tags: ['christophanies'],
   },
   {
     _id: 'gotquestions_christophanies_link',
@@ -71,7 +71,7 @@ export default [
     url: 'https://www.gotquestions.org/theophany-Christophany.html',
     displayText: 'GotQuestions.org \u2013 What is a Christophany?',
     icon: 'question.svg',
-    categories: ['christophanies'],
+    tags: ['christophanies'],
   },
   {
     _id: 'gotquestions_angel_of_the_lord_link',
@@ -79,7 +79,7 @@ export default [
     url: 'https://www.gotquestions.org/angel-of-the-Lord.html',
     displayText: 'GotQuestions.org \u2013 Who is the "angel of the LORD"',
     icon: 'question.svg',
-    categories: ['christophanies'],
+    tags: ['christophanies'],
   },
   {
     _id: 'cs_lewis_link',
@@ -87,7 +87,7 @@ export default [
     url: '...',
     displayText: 'C.S. Lewis',
     icon: 'scholar.svg',
-    categories: ['popular_theologians'],
+    tags: ['popular_theologians'],
   },
   {
     _id: 'augustine_link',
@@ -95,7 +95,7 @@ export default [
     url: '...',
     displayText: 'Augustine of Hippo',
     icon: 'historical_figure.svg',
-    categories: ['historic_theologians'],
+    tags: ['historic_theologians'],
   },
   {
     _id: 'thomas_aquinas_link',
@@ -103,7 +103,7 @@ export default [
     url: '...',
     displayText: 'Thomas Aquinas',
     icon: 'historical_figure.svg',
-    categories: ['historic_theologians'],
+    tags: ['historic_theologians'],
   },
   {
     _id: 'nt_wright_link',
@@ -111,7 +111,7 @@ export default [
     url: '...',
     displayText: 'N.T. Wright',
     icon: 'scholar.svg',
-    categories: ['popular_theologians'],
+    tags: ['popular_theologians'],
   },
   {
     // TODO: Here, some theologians are duplicated with both links and full cards. This is probably terrible
@@ -119,15 +119,210 @@ export default [
     platform: 'personal',
     url: '...',
     displayText: 'John Calvin',
-    icon: 'historical_figure.svg',
-    categories: ['historic_theologians', 'reformation_theologians'],
+    tags: ['historic_theologians', 'reformation_theologians'],
   },
   {
     _id: 'martin_luther_link',
     platform: 'personal',
     url: '...',
     displayText: 'Martin Luther',
-    icon: 'historical_figure.svg',
-    categories: ['historic_theologians', 'reformation_theologians'],
+    tags: ['historic_theologians', 'reformation_theologians'],
+  }, // Jesus as God and Man
+  {
+    _id: 'gotquestions_Jesus_God_man_video',
+    tooltip: 'GotQuestions.org discusses the hypostatic union of Christ.',
+    platform: 'youtube',
+    url: 'https://youtu.be/Dx1s-6P9jYc?si=tQLA0VWZUrM9WHC4',
+    displayText: 'How can Jesus be both God and man at the same time?',
+    tags: ['Jesus', 'trinity', 'Jesus_dual_nature'],
   },
+  {
+    _id: 'bibleproject_Jesus_God_man',
+    platform: 'youtube',
+    tooltip:
+      'BibleProject answers the question of Jesus\' use of the "Son of Man" title',
+    url: 'https://youtu.be/z6cWEcqxhlI?si=vMUHKU1iYMTcU2ig',
+    displayText: 'Why Jesus Called Himself the Son of Man',
+    tags: ['Jesus', 'trinity', 'daniel_7', 'Jesus_dual_nature'],
+  },
+  {
+    _id: 'ruslan_Jesus_God_man',
+    platform: 'youtube',
+    tooltip: 'Ruslan reacts to a clip and discusses Jesus being God and man',
+    url: 'https://youtu.be/lnCmXpyCb0A?si=se8s7G1wLqj1wyDW',
+    displayText: 'How Was Jesus Fully Man and Fully God?',
+    tags: ['Jesus', 'trinity', 'Jesus_dual_nature'],
+  },
+  {
+    _id: 'got_questions_Jesus_God_man_personal',
+    platform: 'personal',
+    tooltip:
+      'GotQuestions.org article about the hypostatic union of Christ as God and man',
+    url: 'https://www.gotquestions.org/fully-God-fully-man.html',
+    displayText: 'How was Jesus fully God and fully man?',
+    icon: 'question.svg',
+    tags: ['Jesus', 'trinity', 'Jesus_dual_nature'],
+  },
+  // Jesus's Ministry
+  {
+    _id: 'mike_winger_Jesus_prediction_resurrection',
+    platform: 'youtube',
+    url: 'https://www.youtube.com/live/V7wto7TeEK0?si=RS8JS_Mc-ogSwjwU',
+    tooltip:
+      "Mike Winger discusses evidence for Jesus's predictions of his death and resurrection",
+    displayText:
+      'Historical Evidence Jesus Predicted his Death and Resurrection',
+    tags: [
+      'Jesus',
+      'trinity',
+      'Jesus_resurrection',
+      'Jesus_death',
+      'Jesus_ministry',
+    ],
+  },
+  {
+    _id: 'mike_winger_baptize_Jesus',
+    platform: 'youtube',
+    url: 'https://youtu.be/l1uNs8XW9JE?si=fVKk5vcMKzs18rIj',
+    displayText: 'Why Baptize Jesus?',
+    tooltip:
+      "Mike Winger discusses the meaning behind John the Baptist's baptism of Jesus",
+    tags: ['Jesus', 'trinity', 'baptism', 'john_the_baptist', 'Jesus_ministry'],
+  },
+  {
+    _id: 'inspiringphilosophy_Jesus_gentiles_contradiction',
+    platform: 'youtube',
+    url: 'https://youtu.be/c5PcBVgoIbc?si=-JTOVyfcXiKGhhcS',
+    tooltip:
+      "InspiringPhilosophy refutes a supposed contradiction about Jesus's role as a savior to the gentiles",
+    displayText: 'Did Jesus come for Gentiles?',
+    tags: [
+      'Jesus',
+      'trinity',
+      'Jesus_resurrection',
+      'gospels_contradictions',
+      'bible_contradictions',
+      'Jesus_ministry',
+    ],
+  },
+  {
+    _id: 'inspiringphilosophy_Jesus_copycat_savior',
+    platform: 'playlist',
+    url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TVOYpPpjYhTUHXycJrY6P2I&si=J1Wlh6G5-gqCbN90',
+    tooltip: 'InspiringPhilosophy playlist comparing Jesus to other gods',
+    displayText: 'Was Jesus a copycat Savior?',
+    tags: ['Jesus', 'trinity', 'Jesus_ministry'],
+  },
+  {
+    _id: 'biblehub_Jesus_ministry',
+    platform: 'personal',
+    tooltip: "BibleHub summarizes Jesus's earthly ministry",
+    url: "https://biblehub.com/topical/u/understanding_jesus'_ministry.htm",
+    displayText: "Understanding Jesus's Ministry",
+    tags: ['Jesus', 'Jesus_ministry'],
+  },
+
+  {
+    _id: 'inspiringphilosophyacademy_Jesus_virgin_birth',
+    platform: 'youtube',
+    url: 'https://youtu.be/b6NlqBzVqmE?si=EWoon27wcQXzPOdw',
+    tooltip:
+      'InspiringPhilosophy Academy discusses the evidence of the virgin birth',
+    displayText: 'Evidence for the Virgin Birth',
+    tags: ['Jesus', 'Jesus_birth'],
+  },
+  {
+    _id: 'gavin_ortlund_virgin_birth_requirement',
+    platform: 'youtube',
+    url: 'https://youtu.be/6xtFiaIeU00?si=L6-Rj7UNjoJ9868y',
+    tooltip:
+      'Gavin Ortlund answers if believing in the virgin birth is a requirement of Christianity',
+    displayText: 'Do Christians Have to Believe in the Virgin Birth?',
+    tags: ['Jesus', 'Jesus_birth'],
+  },
+  {
+    _id: 'trent_horn_virgin_birth_paganism',
+    platform: 'youtube',
+    url: 'https://youtu.be/rcOlR0_oNas?si=0rup-3qhW0Of79gd',
+    tooltip:
+      'Trent Horn discusses if the virgin birth of Jesus was copied from other religions',
+    displayText: 'Is the Virgin Birth Copied from Paganism?',
+
+    tags: ['Jesus', 'Jesus_birth'],
+  },
+
+  {
+    _id: 'mike_winger_making_sense_of_parables',
+    platform: 'youtube',
+    url: 'https://youtu.be/hRVt7HzJuzM?si=WoJTDO5vBYZuF5h6',
+    tooltip: 'Mike Winger walks through the parables in Mark 4',
+    displayText: "Making Sense of Jesus' Parables",
+    tags: ['Jesus', 'parables'],
+  },
+  {
+    _id: 'bibleproject_why_Jesus_parables',
+    platform: 'youtube',
+    url: 'https://youtu.be/XX-aAg4_U2Q?si=p70RxJNCkvA96CRx',
+    tooltip: 'BibleProject answers why Jesus spoke in parables',
+    displayText: 'Why Jesus Told Parables',
+    tags: ['Jesus', 'parables'],
+  },
+  {
+    _id: 'mike_winger_parable_wineskins',
+    platform: 'youtube',
+    url: 'https://youtu.be/xTsEB-ymd3M?si=zmRXwTesb7tWZJlX',
+    tooltip:
+      'Mike Winger analyzes the parable of the wineskins in the Synoptic Gospels',
+    displayText: "Jesus' Parable of the Wineskins",
+    tags: ['Jesus', 'parables'],
+  },
+  {
+    _id: 'down_to_earth_book',
+    platform: 'book',
+    url: 'https://www.goodreads.com/book/show/42683884-down-to-earth',
+    tooltip:
+      "Tom Hughes writes about practical applications of Jesus's parables",
+    displayText:
+      "Down to Earth: How Jesus' Stories Can Change Your Everyday Life",
+    tags: ['Jesus', 'parables'],
+  },
+
+  // The Gospels
+  {
+    _id: 'bibleproject_matthew_summary',
+    platform: 'youtube',
+    url: 'https://youtu.be/3Dv4-n6OYGI?si=KwgJyOCETlZ22SGI',
+    displayText: 'Gospel of Matthew Summary',
+    tags: ['bibleproject_gospel_summary', 'matthew', 'gospels'],
+  },
+  {
+    _id: 'bibleproject_mark_summary',
+    platform: 'youtube',
+    url: 'https://youtu.be/HGHqu9-DtXk?si=Bwhg5Esqm6CMIanZ',
+    displayText: 'Gospel of Mark Summary',
+    tags: ['bibleproject_gospel_summary', 'mark', 'gospels'],
+  },
+  {
+    _id: 'bibleproject_luke_summary',
+    platform: 'youtube',
+    url: 'https://youtu.be/XIb_dCIxzr0?si=k7KstogggGM0yvv9',
+    displayText: 'Gospel of Luke Summary',
+    tags: ['bibleproject_gospel_summary', 'luke', 'gospels'],
+  },
+  {
+    _id: 'bibleproject_john_summary',
+    platform: 'youtube',
+    url: 'https://youtu.be/G-2e9mMf7E8?si=MxB3pEQxpqPYCqEF',
+    displayText: 'Gospel of John Summary',
+    tags: ['bibleproject_gospel_summary', 'john', 'gospels'],
+  },
+
+  // {
+  //   _id: '',
+  //   platform: '',
+  //   url: '',
+  //   displayText: '',
+  //   icon: '.svg',
+  //   tags: ['']
+  // },
 ];

@@ -7,7 +7,7 @@ export default [
     shortDesc: '...',
     longDesc: '',
     badges: ['video', 'website', 'apologetics', 'theology'],
-    categories: ['theologians_popular'],
+    tags: ['theologians_popular'],
   },
   {
     _id: 'john_lennox',

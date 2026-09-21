@@ -17,12 +17,13 @@ export interface IResource {
   _id: string;
   icon?: string;
   name: string;
+  color?: string;
   creator?: string;
   type: resourceType;
   shortDesc?: string;
   longDesc?: string;
   badges: badges[];
-  links: ResourceLink[];
+  links?: ResourceLink[];
 }
 
 /**
@@ -49,7 +50,7 @@ export const resourceLinkSchema = new Schema({
   displayText: String,
   tooltip: String,
   priority: Boolean,
-  categories: [{ type: String, required: true }],
+  tags: [{ type: String, required: true }],
 });
 
 export const resourceSchema = new Schema({
@@ -64,7 +65,7 @@ export const resourceSchema = new Schema({
   links: [resourceLinkSchema],
   color: String,
   api: resourceAPISchema,
-  categories: [String], // Categories here will be a list of IDs extracted when each resource is created and categories are selected
+  tags: [String], // Tags here will be a list of IDs extracted when each resource is created and tags are selected
 });
 
 export const MiscLinks = mongoose.model('MiscLinks', resourceLinkSchema);

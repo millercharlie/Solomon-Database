@@ -116,7 +116,7 @@ export default [
     ],
   },
   {
-    _id: 'inspiring_philosophy',
+    _id: 'inspiringphilosophy',
     name: 'InspiringPhilosophy',
     creator: 'Michael Jones',
     type: 'ministry',

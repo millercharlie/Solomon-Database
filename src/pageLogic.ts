@@ -1,14 +1,25 @@
 import { resourceType, pageType, categoryType, badges } from './enums';
-import { ICategory, IPage, IRow } from '../models/Pages';
 import {
-  IResource,
-  MiscLinks,
-  ResourceLink,
-  Resources,
-} from '../models/Resources';
+  GlossaryData,
+  GlossaryItem,
+  GlossaryPage,
+  ICategory,
+  IPage,
+  IRow,
+  Topics,
+} from '../models/Pages';
+import { IResource, ResourceLink, Resources } from '../models/Resources';
 import { defaultSidebar } from './sidebar';
 import categories from '../data/categories';
 import topics from '../data/topics';
+import {
+  findResourceInData,
+  getLinksByCategory,
+  getLinksByCategoryId,
+  getResourcesByCategory,
+  pageDataToResource,
+} from './utils';
+import { dummyResource, dummyRow } from './dummy';
 
 const ids = [
   'nt_wright',
@@ -20,7 +31,7 @@ const ids = [
   'nt',
   'resurrection',
   'bible_project',
-  'inspiring_philosophy',
+  'inspiringphilosophy',
   'bible_thinker',
   'truth_unites',
   'gospel',
@@ -28,47 +39,12 @@ const ids = [
   'enduring_word',
 ];
 
-const findById = (data: IResource[], _id: string): IResource => {
-  const item = data.find((i) => i._id === _id);
-  if (!item) {
-    console.error(`ID "${_id}" not found in data`);
-    throw new Error(`ID "${_id}" not found in data`);
-  } else return item;
-};
-
 // TODO: Right now, this is just a filter. In the future, all categories should be housed in the database
 export const getCategoriesByPageAndType = (
   pageId: string,
   categoryType: categoryType
 ) => {
   return categories[pageId].filter((c: ICategory) => c.type === categoryType);
-};
-
-/**
- * Retrieves resources by category
- * @param category
- * @returns
- */
-const getResourcesByCategory = async (
-  category: ICategory
-): Promise<IResource[]> => {
-  const data = (await Resources.find({
-    categories: category._id,
-  })) as IResource[];
-  return data;
-};
-/**
- * Retrieves resource links in list form
- * @param category
- * @returns
- */
-const getLinksByCategory = async (
-  category: ICategory
-): Promise<ResourceLink[]> => {
-  const data = (await MiscLinks.find({
-    categories: category._id,
-  })) as ResourceLink[];
-  return data;
 };
 
 const getListRowContent = (
@@ -85,7 +61,7 @@ const getListRowContent = (
 
 export const findCategoryById = (categoryId: string): ICategory | undefined => {
   const newCategories = Object.values(categories).flat();
-  return newCategories.find((c) => c._id === categoryId);
+  return newCategories.find((c) => c._id === categoryId) as ICategory;
 };
 
 /**
@@ -93,16 +69,19 @@ export const findCategoryById = (categoryId: string): ICategory | undefined => {
  */
 export const getDashboardRows = async (): Promise<IPage> => {
   const data = (await Resources.find({ _id: { $in: ids } })) as IResource[];
+  const topics = (await Topics.find({ _id: { $in: ids } })) as IPage[];
+  data.push(...topics.map((t): IResource => pageDataToResource(t)));
+  console.log(data);
 
   const row1: IRow = {
     _id: 'theology_intro',
     name: 'Introduction to Theology',
     type: categoryType.card,
     content: [
-      findById(data, 'nt_wright'),
-      findById(data, 'john_lennox'),
-      // findById(data, 'trinity'),
-      findById(data, 'william_lane_craig'),
+      findResourceInData(data, 'nt_wright'),
+      findResourceInData(data, 'john_lennox'),
+      findResourceInData(data, 'trinity'),
+      findResourceInData(data, 'william_lane_craig'),
     ],
   };
   const row2: IRow = {
@@ -110,10 +89,10 @@ export const getDashboardRows = async (): Promise<IPage> => {
     name: 'High-Level Bible Commentary',
     type: categoryType.card,
     content: [
-      findById(data, 'gotquestions'),
-      findById(data, 'pauline_letters'),
-      findById(data, 'resurrection'),
-      findById(data, 'bible_project'),
+      findResourceInData(data, 'gotquestions'),
+      findResourceInData(data, 'pauline_letters'),
+      findResourceInData(data, 'resurrection'),
+      findResourceInData(data, 'bible_project'),
     ],
   };
   const row3: IRow = {
@@ -121,10 +100,10 @@ export const getDashboardRows = async (): Promise<IPage> => {
     name: 'Deeper Apologetics',
     type: categoryType.card,
     content: [
-      findById(data, 'inspiring_philosophy'),
-      findById(data, 'william_lane_craig'),
-      findById(data, 'bible_thinker'),
-      findById(data, 'truth_unites'),
+      findResourceInData(data, 'inspiring_philosophy'),
+      findResourceInData(data, 'william_lane_craig'),
+      findResourceInData(data, 'bible_thinker'),
+      findResourceInData(data, 'truth_unites'),
     ],
   };
   const row4: IRow = {
@@ -132,10 +111,10 @@ export const getDashboardRows = async (): Promise<IPage> => {
     name: 'Topics for New Believers',
     type: categoryType.card,
     content: [
-      findById(data, 'resurrection'),
-      findById(data, 'gospel'),
-      findById(data, 'ot'),
-      findById(data, 'nt'),
+      findResourceInData(data, 'resurrection'),
+      findResourceInData(data, 'gospel'),
+      findResourceInData(data, 'ot'),
+      findResourceInData(data, 'nt'),
     ],
   };
 
@@ -144,7 +123,7 @@ export const getDashboardRows = async (): Promise<IPage> => {
     title: 'Dashboard',
     pageType: pageType.DASHBOARD, // Dashboard will not have a description provided since it is hardcoded
     rows: [row1, row2, row3, row4],
-    sidebarItems: defaultSidebar,
+    sidebarItems: defaultSidebar, // TODO: Sidebar isn't loading in the frontend? Also the YouTube API is calling when it shouldn't
   };
 };
 
@@ -216,33 +195,128 @@ export const getTheologyData = async (): Promise<IPage> => {
   return Promise.resolve(pageData);
 };
 
+const parseTopicRows = async (topic: IPage): Promise<IRow[]> => {
+  const parsedRows: IRow[] = await Promise.all(
+    topic.rows.map(async (r: IRow) => {
+      if (r.type === categoryType.list) {
+        const newContent: IResource[] = await Promise.all(
+          r.content.map(async (c: IResource | string) => {
+            if (typeof c === 'string') {
+              console.error('Content must be a Resource');
+              throw new Error('Content must be a Resource');
+            }
+            const newLinks = await getLinksByCategoryId(c._id);
+            return { ...c, links: newLinks };
+          })
+        );
+        return { ...r, content: newContent };
+      } else {
+        return dummyRow;
+      }
+    })
+  );
+  const additionalRows: IRow[] = [];
+  if (topic.sub) {
+    const content = await Promise.all(
+      topic.sub.map(async (id: string) => {
+        // Find topic by ID
+        const dataTopic: IPage | null = await Topics.findById(id);
+        if (dataTopic === null) {
+          console.error('Error: Topic does not exist in list.');
+          return dummyResource; // TODO: This will certainly not be a dummy, but it exists for now until topics are done
+        }
+        return pageDataToResource(dataTopic);
+      })
+    );
+    additionalRows.push({
+      _id: 'sub_topics',
+      name: 'Sub-Topics',
+      type: categoryType.card,
+      content,
+    });
+  }
+  if (topic.related) {
+    const content = await Promise.all(
+      topic.related.map(async (id: string) => {
+        // Find topic by ID
+        const dataTopic: IPage | null = await Topics.findById(id);
+        if (dataTopic === null) {
+          console.error('Error: Topic does not exist in list.');
+          return dummyResource;
+        }
+        return pageDataToResource(dataTopic);
+      })
+    );
+    additionalRows.push({
+      _id: 'related_topics',
+      name: 'Related Topics',
+      type: categoryType.card,
+      content,
+    });
+  }
+  const allRows = await Promise.all([...parsedRows, ...additionalRows]);
+  return allRows;
+};
+
 export const getTopicData = async (topicId: string): Promise<IPage> => {
-  const topic = topics.find((t) => t._id === topicId) as unknown as IPage; // TODO: This sucks but prevents errors
+  const topic = topics.find((t) => t._id === topicId) as IPage;
   if (!topic) {
     console.error(`Topic "${topicId}" not found`);
     throw new Error(`Topic "${topicId}" not found.`);
   }
+  const rows = await parseTopicRows(topic);
+  return { ...topic, rows };
+};
 
-  const parsedRows: IRow = topic.rows.map((r: IRow) => {
-    if (r.type === categoryType.list) {
-      const newContent: IResource[] = Promise.all(
-        r.content.map(async (c: IResource) => {
-          const category = findCategoryById(c._id);
-          if (category) {
-            const newLinks = await getLinksByCategory(category);
-            return { ...c, links: newLinks };
-          }
-        })
-      );
-      return { ...r, content: newContent };
-    } else {
-      if (r._id === 'sub' || r._id === 'related') {
-        // Invariance: This will be a string
-        r.content.map((c: unknown) => {});
-      }
-    }
-  });
-  console.log(parsedRows);
+const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+/**
+ * Retrieves all resources by letter.
+ */
+const getGlossaryResources = async (): Promise<GlossaryData[]> => {
+  return await Promise.all(
+    alphabet.map(async (letter) => {
+      const regex = letter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const resources = (await Resources.find({
+        _id: { $regex: new RegExp(`^${regex}`, 'i') },
+      })) as IResource[];
+      const content: GlossaryItem[] = resources.map((t) => ({
+        _id: t._id,
+        pretty: t.creator ? `${t.name} - ${t.creator}` : t.name,
+        type: t.type,
+      }));
+      return {
+        letter,
+        content,
+      };
+    })
+  );
+};
+/**
+ * Retrieves all topics by letter.
+ */
+const getGlossaryTopics = async (): Promise<GlossaryData[]> => {
+  return await Promise.all(
+    alphabet.map(async (letter) => {
+      const regex = letter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const topics = (await Topics.find({
+        _id: { $regex: new RegExp(`^${regex}`, 'i') },
+      })) as IPage[];
+      const content: GlossaryItem[] = topics.map((t) => ({
+        _id: t._id,
+        pretty: t.title,
+      }));
+      return {
+        letter,
+        content,
+      };
+    })
+  );
+};
 
-  return { ...topic, rows: parsedRows };
+export const getGlossaryData = async (): Promise<GlossaryPage> => {
+  const data = {
+    resources: await getGlossaryResources(),
+    topics: await getGlossaryTopics(),
+  };
+  return { _id: 'glossary_page', data };
 };

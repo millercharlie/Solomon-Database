@@ -424,7 +424,7 @@ export default {
     },
     {
       _id: 'pauline_letters',
-      pretty: 'Letters of Paul',
+      pretty: 'The Letters of Paul',
       type: 'card',
     },
     {

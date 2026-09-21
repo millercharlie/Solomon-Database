@@ -66,10 +66,18 @@ export default function DataRoutes(app: Application) {
       res.status(500).json({ error: `Failed to fetch theology page. ${e}` });
     }
   };
+  const fetchGlossary = async (req: Request, res: Response) => {
+    try {
+      const glossary = await dao.getGlossary();
+      res.json(glossary);
+    } catch (e) {
+      res.status(500).json({ error: `Failed to fetch glossary. ${e}` });
+    }
+  };
+
   const fetchTopic = async (req: Request, res: Response) => {
     try {
       const topicId = req.params.topicId as string; // TODO: No idea if casting will break this
-      console.log(topicId);
       const topic = await dao.getTopic(topicId);
       res.json(topic);
     } catch (e) {
@@ -93,11 +101,16 @@ export default function DataRoutes(app: Application) {
 
   app.use(express.json());
 
-  app.get('/api/resources', fetchAllResources);
-  app.get('/api/resources/:id', fetchResourceById);
-  app.post('/api/resources', addNewResource);
+  // Fetch various pages
   app.get('/api/pages/dashboard', fetchDashboard);
   app.get('/api/pages/theology', fetchTheology);
+  app.get('/api/pages/glossary', fetchGlossary);
+
+  // Retrieve resources
+  app.get('/api/resources', fetchAllResources);
+  app.get('/api/resource/:id', fetchResourceById);
+  app.post('/api/resources', addNewResource);
+
   app.get('/api/pages/:pageId/:categoryType', fetchCategoriesByPageAndType);
   app.get('/api/topic/:topicId', fetchTopic);
 }

@@ -1,17 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
-import {
-  IResource,
-  ResourceLink,
-  resourceLinkSchema,
-  resourceSchema,
-} from './Resources';
+import { IResource, ResourceLink, resourceLinkSchema } from './Resources';
 import { pageType, categoryType } from '../src/enums';
 
 export interface IRow {
   _id: string;
   name?: string;
   type?: categoryType;
-  content: IResource[];
+  content: IResource[] | string[];
 }
 /**
  * Data that makes up a sidebar item
@@ -32,12 +27,28 @@ export interface IPage {
   longDesc?: string;
   sidebarItems?: SidebarItem[];
   needsHelp?: boolean;
+  related?: string[];
+  sub?: string[];
 }
 export interface ICategory {
   _id: string;
   pretty: string;
   description?: string;
   type: categoryType;
+}
+
+export interface GlossaryItem {
+  _id: string;
+  pretty: string;
+  type?: string;
+}
+export interface GlossaryData {
+  letter: string;
+  content: GlossaryItem[];
+}
+export interface GlossaryPage {
+  _id: string;
+  data: { resources: GlossaryData[]; topics: GlossaryData[] };
 }
 
 const sidebarItemSchema = new Schema({
@@ -49,7 +60,11 @@ const rowSchema = new Schema({
   _id: { type: String, required: true },
   name: String,
   type: { type: String, enum: categoryType }, // Default is "card"
-  content: { type: [resourceSchema], required: true },
+  content: {
+    type: Schema.Types.Union,
+    of: [[resourceLinkSchema], [String]],
+    required: true,
+  },
 });
 export const categorySchema = new Schema({
   _id: { type: String, required: true },
@@ -69,4 +84,5 @@ export const pageSchema = new Schema({
   needsHelp: Boolean,
 });
 
+export const Topics = mongoose.model('Topics', pageSchema);
 export const Pages = mongoose.model('Pages', pageSchema);
