@@ -67,6 +67,7 @@ export enum pageType {
   ABOUT = 'about',
   NOTFOUND = '404',
   ADD = 'add',
+  BIBLEBOOK = 'bibleBook',
 }
 
 // Page Categories

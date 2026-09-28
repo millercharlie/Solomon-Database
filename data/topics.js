@@ -1,3 +1,5 @@
+import bible from './bible.js';
+
 export default [
   {
     _id: 'Jesus',
@@ -113,19 +115,6 @@ export default [
   },
 
   {
-    _id: 'acts',
-    title: 'The Acts of the Apostles',
-    pageType: 'topic',
-    color: '#ec3636',
-    shortDesc:
-      'Recounts the early church immediately following the resurrection of Jesus Christ.',
-    longDesc:
-      'In the Acts of the Apostles (commonly shortened to "Acts"), Luke gives a detailed account of the early church immediately following the death and resurrection of Jesus Christ. He writes about the spread of Christianity and highlights Saul of Tarsus\'s conversion to Christianity following a supernatural encounter with the risen Christ on the road to Damascus.\n\nThis page houses commentary for select topics of the book, in addition to general Bible commentary ministries and platforms that write about Acts.',
-    rows: [],
-    related: ['gospels', 'pentecost', 'paul', 'peter'],
-  },
-
-  {
     _id: 'revelation',
     title: 'The Revelation',
     pageType: 'topic',
@@ -148,6 +137,18 @@ export default [
       'The word "Gospel" literally means "Good News". It is the news that Jesus Christ died and was resurrected for the forgiveness of our sins. He is risen!\n\nBut wait, what exactly is the Gospel? This page is dedicated to the theology of the Gospel. If you wish to find resources regarding the Gospel books (Matthew, Mark, Luke, John), search "Gospels" above. This page has some resources relating to these books, but focuses on the Gospel message itself.',
     rows: [],
     related: ['gospels', 'atonement', 'crucifixion', 'Jesus'],
+  },
+
+  {
+    _id: 'mosaic_law',
+    title: 'The Mosaic Law',
+    pageType: 'topic',
+    color: '#a1a1a1',
+    shortDesc: 'The commandments and laws that governed ancient Israel.',
+    longDesc:
+      'The Law was given to Isreal by God to help them shine above all the other nations. It was seen as a judicial code of precedents and laws which were enacted to reveal the brokenness of humanity.\n\nBut, were these laws unjust as some allege? Were they even helpful? This page dives into the purpose, theology, and imperfection of the Law and how Christ fulfilled it.',
+    rows: [],
+    related: ['moses', 'exodus', 'leviticus', 'deuteronomy'],
   },
 
   {
@@ -198,8 +199,8 @@ export default [
         content: [
           'inspiringphilosophy',
           'wes_huff',
-          'mike_winger',
-          'gavin_ortlund',
+          'bible_thinker',
+          'truth_unites',
         ],
       },
     ],
@@ -246,6 +247,7 @@ export default [
       },
     ],
   },
+  ...bible,
 ];
 
 // {

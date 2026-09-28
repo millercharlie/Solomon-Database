@@ -19,7 +19,7 @@ import {
   getResourcesByCategory,
   pageDataToResource,
 } from './utils';
-import { dummyResource, dummyRow } from './dummy';
+import { dummyResource } from './dummy';
 
 const ids = [
   'nt_wright',
@@ -29,7 +29,7 @@ const ids = [
   'gotquestions',
   'ot',
   'nt',
-  'resurrection',
+  'Jesus_resurrection',
   'bible_project',
   'inspiringphilosophy',
   'bible_thinker',
@@ -71,7 +71,6 @@ export const getDashboardRows = async (): Promise<IPage> => {
   const data = (await Resources.find({ _id: { $in: ids } })) as IResource[];
   const topics = (await Topics.find({ _id: { $in: ids } })) as IPage[];
   data.push(...topics.map((t): IResource => pageDataToResource(t)));
-  console.log(data);
 
   const row1: IRow = {
     _id: 'theology_intro',
@@ -91,7 +90,7 @@ export const getDashboardRows = async (): Promise<IPage> => {
     content: [
       findResourceInData(data, 'gotquestions'),
       findResourceInData(data, 'pauline_letters'),
-      findResourceInData(data, 'resurrection'),
+      findResourceInData(data, 'Jesus_resurrection'),
       findResourceInData(data, 'bible_project'),
     ],
   };
@@ -100,7 +99,7 @@ export const getDashboardRows = async (): Promise<IPage> => {
     name: 'Deeper Apologetics',
     type: categoryType.card,
     content: [
-      findResourceInData(data, 'inspiring_philosophy'),
+      findResourceInData(data, 'inspiringphilosophy'),
       findResourceInData(data, 'william_lane_craig'),
       findResourceInData(data, 'bible_thinker'),
       findResourceInData(data, 'truth_unites'),
@@ -111,7 +110,7 @@ export const getDashboardRows = async (): Promise<IPage> => {
     name: 'Topics for New Believers',
     type: categoryType.card,
     content: [
-      findResourceInData(data, 'resurrection'),
+      findResourceInData(data, 'Jesus_resurrection'),
       findResourceInData(data, 'gospel'),
       findResourceInData(data, 'ot'),
       findResourceInData(data, 'nt'),
@@ -195,6 +194,19 @@ export const getTheologyData = async (): Promise<IPage> => {
   return Promise.resolve(pageData);
 };
 
+const getResourceById = async (id: string): Promise<IResource> => {
+  const topicPage: IPage | null = await Topics.findById(id);
+  if (topicPage === null) {
+    const resource: IResource | null = await Resources.findById(id);
+    if (resource === null) {
+      console.error(`Error: No topic or resource found`);
+      return dummyResource;
+    }
+    return resource;
+  }
+  return pageDataToResource(topicPage);
+};
+
 const parseTopicRows = async (topic: IPage): Promise<IRow[]> => {
   const parsedRows: IRow[] = await Promise.all(
     topic.rows.map(async (r: IRow) => {
@@ -202,16 +214,36 @@ const parseTopicRows = async (topic: IPage): Promise<IRow[]> => {
         const newContent: IResource[] = await Promise.all(
           r.content.map(async (c: IResource | string) => {
             if (typeof c === 'string') {
-              console.error('Content must be a Resource');
-              throw new Error('Content must be a Resource');
+              // TODO: This needs to return an IResource[]
+              const resource = await getResourceById(c);
+              console.log(resource);
+              // If this is a string, it will be a resource/topic that already exists
+              return {
+                _id: resource._id,
+                platform: 'solomon',
+                url: '', // TODO: I guess the frontend might calculate this? It feels terrible though
+                displayText: resource.name,
+                tooltip: resource.shortDesc,
+              };
             }
-            const newLinks = await getLinksByCategoryId(c._id);
-            return { ...c, links: newLinks };
+            const links = await getLinksByCategoryId(c._id);
+            return { ...c, links };
           })
         );
         return { ...r, content: newContent };
       } else {
-        return dummyRow;
+        const newContent: IResource[] = await Promise.all(
+          r.content.map(async (c: IResource | string) => {
+            if (typeof c === 'string') {
+              const res = await getResourceById(c);
+              console.log(res);
+              return res;
+            } else {
+              return c;
+            }
+          })
+        );
+        return { ...r, content: newContent };
       }
     })
   );

@@ -1,5 +1,5 @@
 import { IResource, Resources } from '../models/Resources';
-import { ICategory, IPage } from '../models/Pages';
+import { GlossaryPage, ICategory, IPage } from '../models/Pages';
 import {
   findCategoryById,
   getCategoriesByPageAndType,
@@ -9,7 +9,6 @@ import {
   getTopicData,
 } from './pageLogic';
 import { categoryType } from './enums';
-import categories from 'categories';
 
 interface SolomonDao {
   getAllResources(): Promise<IResource[]>;
@@ -17,6 +16,13 @@ interface SolomonDao {
   addResource(resource: IResource): any;
   getDashboard(): Promise<IPage>;
   getTheology(): Promise<IPage>;
+  getGlossary(): Promise<GlossaryPage>;
+  getTopic(topicId: string): Promise<IPage>;
+  findCategoryById(categoryId: string): Promise<ICategory>;
+  getCategoriesByPageAndType(
+    pageId: string,
+    categoryId: categoryType
+  ): Promise<ICategory[]>;
 }
 
 /**
@@ -39,7 +45,7 @@ class SolomonDaoImplementation implements SolomonDao {
   async getTheology(): Promise<IPage> {
     return getTheologyData();
   }
-  async getGlossary(): Promise<IPage> {
+  async getGlossary(): Promise<GlossaryPage> {
     return getGlossaryData();
   }
 
@@ -53,9 +59,9 @@ class SolomonDaoImplementation implements SolomonDao {
 
   async getCategoriesByPageAndType(
     pageId: string,
-    categoryId: categoryType
+    categoryType: categoryType
   ): Promise<ICategory[]> {
-    return getCategoriesByPageAndType(pageId, categoryId);
+    return getCategoriesByPageAndType(pageId, categoryType);
   }
 }
 export const solomonDao = new SolomonDaoImplementation();

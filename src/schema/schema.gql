@@ -1,0 +1,145 @@
+# Enumerations
+enum ResourceType {
+  person
+  content
+  historicalFigure
+  ministry
+  topic
+  question
+  placeholder
+}
+enum CategoryType {
+  card
+  list
+}
+enum PageType {
+  dashboard
+  apologetics
+  theology
+  commentary
+  topic
+  glossary
+  about
+  notFound
+  add
+  bibleBook
+}
+
+type Text {
+  value: String
+}
+
+type ResourceRowContent {
+  content: [Resource!]!
+}
+type StringRowContent {
+  content: [String!]!
+}
+union RowContent = ResourceRowContent | StringRowContent
+type Row {
+  _id: String!
+  name: String
+  type: CategoryType
+  content: RowContent!
+}
+
+type Category {
+  _id: String!
+  pretty: String!
+  description: String
+  type: CategoryType
+}
+
+type ResourceLink {
+  _id: ID!
+  platform: String!
+  link: String!
+  displayText: String!
+  icon: String
+  priority: Boolean
+}
+
+type Content {
+  _id: ID!
+  title: String!
+  desc: String
+  thumbnail: String!
+  badges: [String]
+  link: String!
+}
+
+type SidebarItem {
+  _id: String!
+  title: String!
+  icon: String!
+  content: [ResourceLink!]!
+}
+
+type Page {
+  _id: String!
+  title: String!
+  color: String
+  rows: [Row]!
+  pageType: PageType!
+  shortDesc: String
+  longDesc: String
+  sidebarItems: [SidebarItem]
+  needsHelp: Boolean
+  related: [String]
+  sub: [String]
+}
+
+type Resource {
+  _id: ID!
+  name: String!
+  image: String
+  links: [ResourceLink]
+  doubleWidth: String
+  shortDesc: String
+  longDesc: String
+  recentContent: [Content]
+  recommendedContent: [Content]
+  favorite: Boolean
+  badges: [String]
+  ministry: String
+  primLink: String
+  type: ResourceType
+  rating: Int
+}
+
+# Glossary Page
+type GlossaryItem {
+  _id: String!
+  pretty: String!
+  type: String
+}
+type GlossarySection {
+  letter: String!
+  content: [GlossaryItem!]!
+}
+type GlossaryData {
+  resources: [GlossarySection!]!
+  topics: [GlossarySection!]!
+}
+type GlossaryPage {
+  _id: String!
+  data: GlossaryData!
+}
+
+type Query {
+  getAllResources: [Resource]
+  getResourceById(id: String!): Resource
+  getDashboard: Page
+  getTheology: Page
+  getGlossary: GlossaryPage
+  getTopic(topicId: ID!): Page
+  findCategoryById: Category
+  getCategoriesByPageAndType(
+    pageId: String!
+    categoryType: CategoryType
+  ): [Category]
+}
+
+type Mutation {
+  addResource(resource: Resource!): Resource
+}

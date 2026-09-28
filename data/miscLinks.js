@@ -316,13 +316,89 @@ export default [
     displayText: 'Gospel of John Summary',
     tags: ['bibleproject_gospel_summary', 'john', 'gospels'],
   },
+  {
+    _id: 'bibleproject_gospel',
+    platform: 'youtube',
+    url: 'https://youtu.be/xrzq_X1NNaA?si=9X-embnIATcSzH4-',
+    displayText: 'BibleProject - The Gospel',
+    tags: ['gospels_intro', 'gospels'],
+  },
+  {
+    _id: 'wes_huff_gospels_historical_scrutiny',
+    platform: 'youtube',
+    url: 'https://youtu.be/Z_eCCb3uTB4?si=pQ4e4IkDcOMjLmw_',
+    displayText: 'Can the Gospels survive historical scrutiny?',
+    tooltip:
+      'Wes Huff explores if the Gospel accounts are historically reliable',
+    tags: ['gospels_accuracy', 'gospels'],
+  },
+  {
+    _id: 'mike_winger_challenging_contradiction',
+    platform: 'youtube',
+    url: 'https://www.youtube.com/live/-GAGA9wnJ7k?si=mPLmheslFObt8ifT',
+    displayText: 'A Very Challenging "Contradiction" in the Gospels',
+    tooltip: 'Mike Winger refutes a "contradiction" found in Mark 14',
+    tags: ['gospels_contradictions', 'gospels'],
+  },
+  {
+    _id: 'inspiringphilosophy_gospel_reliability_playlist',
+    platform: 'playlist',
+    url: 'https://www.youtube.com/show/VLPL1mr9ZTZb3TUDsgjzdyFz8f38YxV3QdX0?sbp=KgthYWNzMF9FN1Fkd0AB',
+    displayText: 'Playlist - The Reliability of the Gospels',
+    tooltip:
+      'InspiringPhilosophy playlist about the historical reliability of the Gospels',
+    tags: ['gospels_accuracy', 'gospels'],
+  },
 
+  {
+    _id: 'inspiringphilosophy_imperfect_mosaic_law',
+    platform: 'youtube',
+    url: 'https://youtu.be/93JdjLqBQqE?si=4tdqDKRvAiEyi-Kp',
+    tooltip:
+      'InspiringPhilosophy talks about the imperfect nature of the Law in the Old Testament.',
+    displayText: 'The Imperfect Mosaic Law',
+    tags: ['mosaic_law', 'ot_apologetics'],
+  },
+  {
+    _id: 'inspiringphilosophy_trinity_ot',
+    platform: 'youtube',
+    url: 'https://youtu.be/BNt5NKSse0Y?si=P6veFbgECBMNB4Np',
+    tooltip:
+      'InspiringPhilosophy reveals mentions or implicatations of the Trinity in the Old Testament.',
+    displayText: 'The Trinity in the Old Testament',
+    tags: ['trinity', 'ot_apologetics', 'christophanies'],
+  },
+  {
+    _id: 'mike_winger_interpret_ot_violence',
+    platform: 'youtube',
+    url: 'https://youtu.be/iNlMBrP2Jm8?si=4kLmAMkG5iDcXtWx',
+    displayText:
+      "How You Should and Shouldn't Interpret Old Testament Violence",
+    tooltip:
+      'Mike Winger discusses how Christians can make sense of Old Testament violence',
+    tags: ['trinity', 'ot_apologetics', 'christophanies'],
+  },
+  {
+    _id: 'gavin_ortlund_6_minutes_conquest_of_caanan',
+    platform: 'youtube',
+    url: 'https://youtu.be/oLcFBmjyfx8?si=LjdW7sTrUYTIBmVb',
+    displayText: 'The Conquest of Caanan Explained in 6 Minutes',
+    tooltip: "Gavin Ortlund succinctly explains Joshua's Conquest of Caanan",
+    tags: ['conquest_of_caanan', 'ot_apologetics'],
+  },
+  {
+    _id: 'gotquestions_why_four_gospels',
+    platform: 'personal',
+    url: 'https://www.gotquestions.org/four-Gospels.html',
+    displayText: 'Why did God give us four Gospels?',
+    tags: ['gospels_intro', 'gospels'],
+  },
   // {
   //   _id: '',
   //   platform: '',
   //   url: '',
+  //   tooltip: '',
   //   displayText: '',
-  //   icon: '.svg',
   //   tags: ['']
   // },
 ];

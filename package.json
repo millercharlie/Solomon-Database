@@ -11,7 +11,9 @@
     "start": "node dist/src/index.js",
     "dev": "tsx watch src/index.ts",
     "seed": "tsx seed.ts",
-    "start-db": "tsx app.ts"
+    "start-db": "tsx app.ts",
+    "codegen": "graphql-codegen --config codegen.yaml",
+    "codegen:watch": "graphql-codegen --config codegen.yaml --watch"
   },
   "dependencies": {
     "@apollo/server": "^5.5.1",
@@ -24,6 +26,9 @@
     "mongoose": "^9.7.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^7.4.2",
+    "@graphql-codegen/typescript": "^6.1.0",
+    "@graphql-codegen/typescript-resolvers": "^6.1.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.1",

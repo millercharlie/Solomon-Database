@@ -5,7 +5,6 @@ import ot_t_topics from './ot_t_topics.js';
 import creators from './creators.js';
 import apologists from './apologists.js';
 import theologians from './theologians.js';
-import commentaries from './commentaries.js';
 
 export default {
   ...nt_a_topics,
@@ -15,5 +14,4 @@ export default {
   ...creators,
   ...apologists,
   ...theologians,
-  ...commentaries,
 };

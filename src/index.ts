@@ -1,70 +1,44 @@
+import 'dotenv/config';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { buildResolvers } from './resolvers';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+import { expressMiddleware } from '@as-integrations/express5';
+import express from 'express';
+import mongoose from 'mongoose';
+import DataRoutes from './routes';
+import { readFileSync } from 'fs';
 
-import db from '../data/allData';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-/**
- * Schema
- */
-const typeDefs = `
-  enum ResourceType {
-    SCHOLAR
-    CREATOR
-    MINISTRY
-    BOOK
-    TOPIC
-    QUESTION
+const main = async () => {
+  const uri = process.env.MONGODB_URI;
+  console.log(uri);
+  if (!uri) {
+    console.error('Invalid MongoDB connection string');
+    process.exit(1);
   }
+  await mongoose.connect(uri);
 
-  type ResourceLink {
-    id: ID!
-    platform: String!
-    link: String!
-    displayText: String!
-    icon: String
-    priority: Boolean
-  }
+  const app = express();
+  DataRoutes(app);
 
-  type Content {
-    _id: ID!
-    title: String!
-    desc: String
-    thumbnail: String!
-    badges: [String]
-    link: String!
-  }
+  const typeDefs = readFileSync(join(__dirname, 'schema/schema.gql'), 'utf-8');
+  const resolvers = buildResolvers();
 
-  type Resource {
-    _id: ID!
-    name: String!
-    image: String
-    links: [ResourceLink]
-    doubleWidth: String
-    shortDesc: String
-    longDesc: String
-    recentContent: [Content]
-    recommendedContent: [Content]
-    favorite: Boolean
-    badges: [String]
-    ministry: String
-    primLink: String
-    type: ResourceType
-    rating: Int
-  }
+  const server = new ApolloServer({ typeDefs, resolvers });
+  await server.start();
+  app.use('/graphql', express.json(), expressMiddleware(server));
 
-  type Query {
-      apologists: [Resource],
-      commentaries: [Resource],
-  }
-`;
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
+  });
+};
 
-// Resolvers
-const resolvers = buildResolvers(db);
-const server = new ApolloServer({ typeDefs, resolvers });
-
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
+main().catch((e) => {
+  console.error(`Server failed to start: ${e}`);
+  process.exit(1);
 });
-
-console.log(`Server running at ${url}`);
