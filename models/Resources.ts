@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 import { badges, platforms, resourceType, apiSource } from '../src/enums';
+import { Everything } from './Everything';
 
 /**
  * Resource link which includes a platform and the actual link.
@@ -19,11 +20,11 @@ export interface IResource {
   name: string;
   color?: string;
   creator?: string;
-  type: resourceType;
+  resourceType: resourceType;
   shortDesc?: string;
   longDesc?: string;
   badges: badges[];
-  links?: ResourceLink[];
+  links?: ResourceLink[] | string[];
 }
 
 /**
@@ -58,15 +59,18 @@ export const resourceSchema = new Schema({
   icon: String,
   name: { type: String, required: true },
   creator: String,
-  type: { type: String, enum: resourceType },
+  resourceType: { type: String, enum: resourceType },
   shortDesc: String,
   longDesc: String,
   badges: [{ type: String, enum: badges }],
-  links: [resourceLinkSchema],
+  links: [Schema.Types.Mixed], // either a list of strings or full resource links
   color: String,
   api: resourceAPISchema,
   tags: [String], // Tags here will be a list of IDs extracted when each resource is created and tags are selected
 });
 
-export const MiscLinks = mongoose.model('MiscLinks', resourceLinkSchema);
-export const Resources = mongoose.model('Resource', resourceSchema);
+export const MiscLinks = Everything.discriminator(
+  'miscLink',
+  resourceLinkSchema
+);
+export const Resources = Everything.discriminator('resource', resourceSchema);

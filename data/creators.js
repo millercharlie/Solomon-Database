@@ -2,7 +2,7 @@ export default [
   {
     _id: 'wes_huff',
     name: 'Wesley (Wes) Huff',
-    type: 'ministry',
+    resourceType: 'ministry',
     color: '#ffffff',
     shortDesc: '"Teach. Reach. Encourage. Equip."',
     longDesc: '...',

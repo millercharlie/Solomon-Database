@@ -24,6 +24,27 @@ enum PageType {
   add
   bibleBook
 }
+enum APIPlatform {
+  youtube
+}
+
+# Inputs
+input ResourceAPIInput {
+  platform: APIPlatform!
+  queryParam: String!
+}
+input ResourceInput {
+  _id: ID!
+  name: String!
+  creator: String
+  color: String
+  type: ResourceType!
+  shortDesc: String
+  longDesc: String
+  badges: [String!]!
+  tags: [String!]!
+  api: ResourceAPIInput
+}
 
 type Text {
   value: String
@@ -89,22 +110,22 @@ type Page {
   sub: [String]
 }
 
+type ResourceAPI {
+  platform: APIPlatform!
+  queryParam: String!
+}
+
 type Resource {
   _id: ID!
   name: String!
-  image: String
-  links: [ResourceLink]
-  doubleWidth: String
+  creator: String
+  color: String
+  type: ResourceType!
   shortDesc: String
   longDesc: String
-  recentContent: [Content]
-  recommendedContent: [Content]
-  favorite: Boolean
-  badges: [String]
-  ministry: String
-  primLink: String
-  type: ResourceType
-  rating: Int
+  badges: [String!]!
+  tags: [String!]!
+  api: ResourceAPI
 }
 
 # Glossary Page
@@ -126,12 +147,15 @@ type GlossaryPage {
   data: GlossaryData!
 }
 
+# Query Type
 type Query {
   getAllResources: [Resource]
   getResourceById(id: String!): Resource
   getDashboard: Page
   getTheology: Page
+  getCommentary: Page
   getGlossary: GlossaryPage
+  search: ResourceLink
   getTopic(topicId: ID!): Page
   findCategoryById: Category
   getCategoriesByPageAndType(
@@ -140,6 +164,7 @@ type Query {
   ): [Category]
 }
 
+# Mutation Type
 type Mutation {
-  addResource(resource: Resource!): Resource
+  addResource(resource: ResourceInput!): Resource
 }

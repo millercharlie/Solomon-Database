@@ -2,7 +2,7 @@ export default [
   {
     _id: 'nt_wright',
     name: 'N.T. Wright',
-    type: 'person',
+    resourceType: 'person',
     color: '#58C03D',
     shortDesc: '...',
     longDesc: '',
@@ -12,7 +12,7 @@ export default [
   {
     _id: 'john_lennox',
     name: 'John Lennox',
-    type: 'person',
+    resourceType: 'person',
     color: '#162E26',
     shortDesc:
       'Northern Irish theologian known for his public debates with Atheists.',

@@ -13,6 +13,10 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export enum ApiPlatform {
+  Youtube = 'youtube'
+}
+
 export type Category = {
   __typename?: 'Category';
   _id: Scalars['String']['output'];
@@ -68,7 +72,7 @@ export type Mutation = {
 
 
 export type MutationAddResourceArgs = {
-  resource: Resource;
+  resource: ResourceInput;
 };
 
 export type Page = {
@@ -90,6 +94,7 @@ export enum PageType {
   About = 'about',
   Add = 'add',
   Apologetics = 'apologetics',
+  BibleBook = 'bibleBook',
   Commentary = 'commentary',
   Dashboard = 'dashboard',
   Glossary = 'glossary',
@@ -103,11 +108,13 @@ export type Query = {
   findCategoryById?: Maybe<Category>;
   getAllResources?: Maybe<Array<Maybe<Resource>>>;
   getCategoriesByPageAndType?: Maybe<Array<Maybe<Category>>>;
+  getCommentary?: Maybe<Page>;
   getDashboard?: Maybe<Page>;
   getGlossary?: Maybe<GlossaryPage>;
   getResourceById?: Maybe<Resource>;
   getTheology?: Maybe<Page>;
   getTopic?: Maybe<Page>;
+  search?: Maybe<ResourceLink>;
 };
 
 
@@ -129,20 +136,39 @@ export type QueryGetTopicArgs = {
 export type Resource = {
   __typename?: 'Resource';
   _id: Scalars['ID']['output'];
-  badges?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  doubleWidth?: Maybe<Scalars['String']['output']>;
-  favorite?: Maybe<Scalars['Boolean']['output']>;
-  image?: Maybe<Scalars['String']['output']>;
-  links?: Maybe<Array<Maybe<ResourceLink>>>;
+  api?: Maybe<ResourceApi>;
+  badges: Array<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  creator?: Maybe<Scalars['String']['output']>;
   longDesc?: Maybe<Scalars['String']['output']>;
-  ministry?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
-  primLink?: Maybe<Scalars['String']['output']>;
-  rating?: Maybe<Scalars['Int']['output']>;
-  recentContent?: Maybe<Array<Maybe<Content>>>;
-  recommendedContent?: Maybe<Array<Maybe<Content>>>;
   shortDesc?: Maybe<Scalars['String']['output']>;
-  type?: Maybe<ResourceType>;
+  tags: Array<Scalars['String']['output']>;
+  type: ResourceType;
+};
+
+export type ResourceApi = {
+  __typename?: 'ResourceAPI';
+  platform: ApiPlatform;
+  queryParam: Scalars['String']['output'];
+};
+
+export type ResourceApiInput = {
+  platform: ApiPlatform;
+  queryParam: Scalars['String']['input'];
+};
+
+export type ResourceInput = {
+  _id: Scalars['ID']['input'];
+  api?: InputMaybe<ResourceApiInput>;
+  badges: Array<Scalars['String']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  creator?: InputMaybe<Scalars['String']['input']>;
+  longDesc?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  shortDesc?: InputMaybe<Scalars['String']['input']>;
+  tags: Array<Scalars['String']['input']>;
+  type: ResourceType;
 };
 
 export type ResourceLink = {
@@ -278,6 +304,7 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  APIPlatform: ApiPlatform;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Category: ResolverTypeWrapper<Category>;
   CategoryType: CategoryType;
@@ -287,12 +314,14 @@ export type ResolversTypes = {
   GlossaryPage: ResolverTypeWrapper<GlossaryPage>;
   GlossarySection: ResolverTypeWrapper<GlossarySection>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
-  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Page: ResolverTypeWrapper<Omit<Page, 'rows'> & { rows: Array<Maybe<ResolversTypes['Row']>> }>;
   PageType: PageType;
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Resource: ResolverTypeWrapper<IResource>;
+  ResourceAPI: ResolverTypeWrapper<ResourceApi>;
+  ResourceAPIInput: ResourceApiInput;
+  ResourceInput: ResourceInput;
   ResourceLink: ResolverTypeWrapper<ResourceLink>;
   ResourceRowContent: ResolverTypeWrapper<Omit<ResourceRowContent, 'content'> & { content: Array<ResolversTypes['Resource']> }>;
   ResourceType: ResourceType;
@@ -314,11 +343,13 @@ export type ResolversParentTypes = {
   GlossaryPage: GlossaryPage;
   GlossarySection: GlossarySection;
   ID: Scalars['ID']['output'];
-  Int: Scalars['Int']['output'];
   Mutation: Record<PropertyKey, never>;
   Page: Omit<Page, 'rows'> & { rows: Array<Maybe<ResolversParentTypes['Row']>> };
   Query: Record<PropertyKey, never>;
   Resource: IResource;
+  ResourceAPI: ResourceApi;
+  ResourceAPIInput: ResourceApiInput;
+  ResourceInput: ResourceInput;
   ResourceLink: ResourceLink;
   ResourceRowContent: Omit<ResourceRowContent, 'content'> & { content: Array<ResolversParentTypes['Resource']> };
   Row: Omit<Row, 'content'> & { content: ResolversParentTypes['RowContent'] };
@@ -388,29 +419,31 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   findCategoryById?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType>;
   getAllResources?: Resolver<Maybe<Array<Maybe<ResolversTypes['Resource']>>>, ParentType, ContextType>;
   getCategoriesByPageAndType?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType, RequireFields<QueryGetCategoriesByPageAndTypeArgs, 'pageId'>>;
+  getCommentary?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType>;
   getDashboard?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType>;
   getGlossary?: Resolver<Maybe<ResolversTypes['GlossaryPage']>, ParentType, ContextType>;
   getResourceById?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<QueryGetResourceByIdArgs, 'id'>>;
   getTheology?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType>;
   getTopic?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<QueryGetTopicArgs, 'topicId'>>;
+  search?: Resolver<Maybe<ResolversTypes['ResourceLink']>, ParentType, ContextType>;
 };
 
 export type ResourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Resource'] = ResolversParentTypes['Resource']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  badges?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
-  doubleWidth?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  favorite?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  links?: Resolver<Maybe<Array<Maybe<ResolversTypes['ResourceLink']>>>, ParentType, ContextType>;
+  api?: Resolver<Maybe<ResolversTypes['ResourceAPI']>, ParentType, ContextType>;
+  badges?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  creator?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   longDesc?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  ministry?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  primLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  rating?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  recentContent?: Resolver<Maybe<Array<Maybe<ResolversTypes['Content']>>>, ParentType, ContextType>;
-  recommendedContent?: Resolver<Maybe<Array<Maybe<ResolversTypes['Content']>>>, ParentType, ContextType>;
   shortDesc?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  type?: Resolver<Maybe<ResolversTypes['ResourceType']>, ParentType, ContextType>;
+  tags?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['ResourceType'], ParentType, ContextType>;
+};
+
+export type ResourceApiResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResourceAPI'] = ResolversParentTypes['ResourceAPI']> = {
+  platform?: Resolver<ResolversTypes['APIPlatform'], ParentType, ContextType>;
+  queryParam?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
 export type ResourceLinkResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResourceLink'] = ResolversParentTypes['ResourceLink']> = {
@@ -465,6 +498,7 @@ export type Resolvers<ContextType = any> = {
   Page?: PageResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Resource?: ResourceResolvers<ContextType>;
+  ResourceAPI?: ResourceApiResolvers<ContextType>;
   ResourceLink?: ResourceLinkResolvers<ContextType>;
   ResourceRowContent?: ResourceRowContentResolvers<ContextType>;
   Row?: RowResolvers<ContextType>;

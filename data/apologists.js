@@ -2,7 +2,7 @@ export default [
   {
     _id: 'william_lane_craig',
     name: 'William Lane Craig',
-    type: 'person',
+    resourceType: 'person',
     color: '#00679A',
     shortDesc: 'Reformed Theologian focusing on apologetics, debates, and more',
     tags: ['theology_intro', 'deeper_apologetics'],
@@ -57,7 +57,7 @@ export default [
     name: 'Truth Unites',
     creator: 'Gavin Ortlund',
     image: 'truth_unites.png',
-    type: 'ministry',
+    resourceType: 'ministry',
     shortDesc:
       '\u201CPromoting Gospel Assurance Through Theological Depth\u201D',
     longDesc:
@@ -126,7 +126,7 @@ export default [
   {
     _id: 'tim_keller',
     name: 'Timothy Keller',
-    type: 'person',
+    resourceType: 'person',
     shortDesc: 'American Presbyterian pastor, theologian, and apologist',
     longDesc: '',
     color: '#FF6602',
@@ -155,7 +155,7 @@ export default [
   {
     _id: 'lee_strobel',
     name: 'Lee Strobel',
-    type: 'person',
+    resourceType: 'person',
     color: '#255088',
     shortDesc: 'Former Atheist known for writing books defending Christianity',
     longDesc:
@@ -196,7 +196,7 @@ export default [
     name: 'BibleThinker',
     creator: 'Mike Winger',
     image: 'bible_thinker.png',
-    type: 'ministry',
+    resourceType: 'ministry',
     color: '#F4B803',
     shortDesc: '"Think Biblically About Everything"',
     longDesc: '...',

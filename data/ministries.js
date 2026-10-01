@@ -2,11 +2,15 @@ export default [
   {
     _id: 'bible_project',
     name: 'BibleProject',
-    type: 'ministry',
+    resourceType: 'ministry',
     color: '#00B4E5',
     shortDesc: '\"Watch, Read, Listen, and Learn.\"',
     longDesc: '...',
     badges: ['video', 'website', 'apologetics', 'theology'],
+    api: {
+      platform: 'youtube',
+      queryParam: 'bibleproject',
+    },
     links: [
       {
         platform: 'personal',
@@ -49,20 +53,14 @@ export default [
   {
     _id: 'enduring_word',
     name: 'Enduring Word',
-    type: 'ministry',
+    resourceType: 'ministry',
     color: '#404A53',
     shortDesc:
       '\"Enduring Word exists to promote the work of Christian discipleship and evangelism worldwide.\"',
     longDesc:
       "Enduring Word's website is filled with commentaries of every single verse of Scripture. It is based on the work of David Guzik and other likeminded peers. Enduring Word also has a Study Bible for sale.",
-    badges: [
-      'video',
-      'website',
-      'church',
-      'apologetics',
-      'theology',
-      'ministry',
-    ],
+    badges: ['website', 'commentary', 'ministry'],
+    tags: ['verse_by_verse_commentary'],
     links: [
       {
         platform: 'personal',
@@ -78,9 +76,46 @@ export default [
     ],
   },
   {
+    _id: 'biblehub',
+    name: 'Bible Hub',
+    resourceType: 'ministry',
+    color: '#027bce',
+    shortDesc:
+      '\"Increasing the visibility and accessibility of the Scriptures online.\"',
+    longDesc: '...',
+    badges: ['website', 'commentary', 'ministry'],
+    tags: ['verse_by_verse_commentary'],
+    links: [
+      {
+        platform: 'personal',
+        url: 'https://biblehub.com/',
+        displayText: 'biblehub.com',
+        priority: true,
+      },
+    ],
+  },
+  {
+    _id: 'blue_letter_bible',
+    name: 'Blue Letter Bible',
+    resourceType: 'ministry',
+    color: '#3c5b85',
+    shortDesc:
+      '"Blue Letter Bible provides powerful tools for an in-depth study of God\'s Word."',
+    longDesc: '...',
+    tags: ['verse_by_verse_commentary'],
+    links: [
+      {
+        platform: 'personal',
+        url: 'https://www.blueletterbible.org/study.cfm',
+        displayText: 'www.blueletterbible.org',
+        priority: true,
+      },
+    ],
+  },
+  {
     _id: 'gotquestions',
     name: 'GotQuestions.org',
-    type: 'ministry',
+    resourceType: 'ministry',
     color: '#4F9BD4',
     shortDesc:
       '\"To glorify God and reach people for Christ by providing biblical answers to spiritually related questions.\"',
@@ -119,7 +154,7 @@ export default [
     _id: 'inspiringphilosophy',
     name: 'InspiringPhilosophy',
     creator: 'Michael Jones',
-    type: 'ministry',
+    resourceType: 'ministry',
     color: '#070c0a',
     shortDesc: '"Helping You Grow Your Faith"',
     longDesc:

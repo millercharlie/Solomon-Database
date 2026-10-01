@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
 import { buildResolvers } from './resolvers';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -9,6 +8,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import DataRoutes from './routes';
 import { readFileSync } from 'fs';
+import cors from 'cors';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -22,6 +22,7 @@ const main = async () => {
   await mongoose.connect(uri);
 
   const app = express();
+  app.use(cors());
   DataRoutes(app);
 
   const typeDefs = readFileSync(join(__dirname, 'schema/schema.gql'), 'utf-8');

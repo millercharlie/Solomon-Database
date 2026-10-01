@@ -1,14 +1,17 @@
-import { IResource, Resources } from '../models/Resources';
-import { GlossaryPage, ICategory, IPage } from '../models/Pages';
+import { IResource, ResourceLink, Resources } from '../models/Resources';
+import { Bible, GlossaryPage, ICategory, IPage } from '../models/Pages';
 import {
   findCategoryById,
   getCategoriesByPageAndType,
-  getDashboardRows,
+  getDashboardData,
   getGlossaryData,
   getTheologyData,
   getTopicData,
+  getCommentaryData,
 } from './pageLogic';
 import { categoryType } from './enums';
+import search from './search';
+import { getBibleBookData, getBibleInfoData } from './utils';
 
 interface SolomonDao {
   getAllResources(): Promise<IResource[]>;
@@ -16,6 +19,7 @@ interface SolomonDao {
   addResource(resource: IResource): any;
   getDashboard(): Promise<IPage>;
   getTheology(): Promise<IPage>;
+  getCommentary(): Promise<IPage>;
   getGlossary(): Promise<GlossaryPage>;
   getTopic(topicId: string): Promise<IPage>;
   findCategoryById(categoryId: string): Promise<ICategory>;
@@ -23,6 +27,7 @@ interface SolomonDao {
     pageId: string,
     categoryId: categoryType
   ): Promise<ICategory[]>;
+  search(query: string): Promise<ResourceLink[]>;
 }
 
 /**
@@ -40,10 +45,13 @@ class SolomonDaoImplementation implements SolomonDao {
   }
 
   async getDashboard(): Promise<IPage> {
-    return getDashboardRows();
+    return getDashboardData();
   }
   async getTheology(): Promise<IPage> {
     return getTheologyData();
+  }
+  async getCommentary(): Promise<IPage> {
+    return getCommentaryData();
   }
   async getGlossary(): Promise<GlossaryPage> {
     return getGlossaryData();
@@ -52,9 +60,21 @@ class SolomonDaoImplementation implements SolomonDao {
   async getTopic(topicId: string): Promise<IPage> {
     return getTopicData(topicId);
   }
+  async getBibleInfo(dataId: string): Promise<IPage> {
+    return getBibleInfoData(dataId);
+  }
+  async getBibleBook(bookId: string): Promise<IPage> {
+    return getBibleBookData(bookId);
+  }
+  async getAllBibleBooks(): Promise<IPage[]> {
+    return Bible.find();
+  }
 
   async findCategoryById(categoryId: string): Promise<ICategory> {
     return findCategoryById(categoryId);
+  }
+  async search(query: string): Promise<ResourceLink[]> {
+    return search(query);
   }
 
   async getCategoriesByPageAndType(

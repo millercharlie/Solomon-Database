@@ -9,6 +9,10 @@ export enum resourceType {
   topic = 'topic',
   question = 'question',
   placeholder = 'placeholder',
+  bibleBook = 'bibleBook',
+  commentary = 'commentary',
+  apologetics = 'apologetics',
+  theology = 'theology',
 }
 export enum badges {
   'video',
@@ -58,16 +62,16 @@ export enum categoryType {
   list = 'list',
 }
 export enum pageType {
-  DASHBOARD = 'dashboard',
-  APOLOGETICS = 'apologetics',
-  THEOLOGY = 'theology',
-  COMMENTARY = 'commentary',
-  TOPIC = 'topic',
-  GLOSSARY = 'glossary',
-  ABOUT = 'about',
-  NOTFOUND = '404',
-  ADD = 'add',
-  BIBLEBOOK = 'bibleBook',
+  dashboard = 'dashboard',
+  apologetics = 'apologetics',
+  theology = 'theology',
+  commentary = 'commentary',
+  topic = 'topic',
+  glossary = 'glossary',
+  about = 'about',
+  notfound = '404',
+  add = 'add',
+  bibleBook = 'bibleBook',
 }
 
 // Page Categories

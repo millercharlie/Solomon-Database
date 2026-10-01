@@ -1,5 +1,6 @@
 import { resourceType, pageType, categoryType, badges } from './enums';
 import {
+  Bible,
   GlossaryData,
   GlossaryItem,
   GlossaryPage,
@@ -7,44 +8,30 @@ import {
   IPage,
   IRow,
   Topics,
+  UnparsedPage,
+  UnparsedRow,
 } from '../models/Pages';
 import { IResource, ResourceLink, Resources } from '../models/Resources';
 import { defaultSidebar } from './sidebar';
 import categories from '../data/categories';
-import topics from '../data/topics';
+
 import {
-  findResourceInData,
   getLinksByCategory,
-  getLinksByCategoryId,
   getResourcesByCategory,
   pageDataToResource,
+  getLinksByCategoryId,
+  getDataByID,
+  idToLink,
 } from './utils';
 import { dummyResource } from './dummy';
-
-const ids = [
-  'nt_wright',
-  'john_lennox',
-  'trinity',
-  'william_lane_craig',
-  'gotquestions',
-  'ot',
-  'nt',
-  'Jesus_resurrection',
-  'bible_project',
-  'inspiringphilosophy',
-  'bible_thinker',
-  'truth_unites',
-  'gospel',
-  'pauline_letters',
-  'enduring_word',
-];
+import { Everything, EverythingType } from '../models/Everything';
 
 // TODO: Right now, this is just a filter. In the future, all categories should be housed in the database
 export const getCategoriesByPageAndType = (
-  pageId: string,
+  pageType: pageType,
   categoryType: categoryType
 ) => {
-  return categories[pageId].filter((c: ICategory) => c.type === categoryType);
+  return categories[pageType].filter((c: ICategory) => c.type === categoryType);
 };
 
 const getListRowContent = (
@@ -54,7 +41,7 @@ const getListRowContent = (
     _id: set.category._id,
     name: set.category.pretty,
     links: set.resourceLinks,
-    type: resourceType.placeholder,
+    resourceType: resourceType.placeholder,
     badges: [badges.placeholder],
   }));
 };
@@ -65,64 +52,231 @@ export const findCategoryById = (categoryId: string): ICategory | undefined => {
 };
 
 /**
- * Retrieves the necessary data for a full dashboard page.
+ * Builds a row with a list of resources based on its type
  */
-export const getDashboardRows = async (): Promise<IPage> => {
-  const data = (await Resources.find({ _id: { $in: ids } })) as IResource[];
-  const topics = (await Topics.find({ _id: { $in: ids } })) as IPage[];
-  data.push(...topics.map((t): IResource => pageDataToResource(t)));
-
-  const row1: IRow = {
-    _id: 'theology_intro',
-    name: 'Introduction to Theology',
+const buildRowResources = async (
+  resourceIds: string[],
+  type: 'related' | 'sub'
+): Promise<IRow> => {
+  const content = await Promise.all(
+    resourceIds.map(async (id: string) => {
+      // Here, related resources and sub-topics can be resources, Bible books, or topics.
+      const data = (await Everything.findById(
+        id
+      ).lean()) as EverythingType | null;
+      if (!data) {
+        console.error(`No data found with ID ${id}`);
+        return dummyResource;
+      } else {
+        switch (data.type) {
+          case 'resource':
+            return data;
+          case 'miscLink':
+            throw new Error('Link cannot be within a card row');
+          case 'bible':
+            return pageDataToResource(data, resourceType.bibleBook);
+          case 'page':
+          case 'topic':
+            return pageDataToResource(data, resourceType.topic);
+          default:
+            return dummyResource;
+        }
+      }
+    })
+  );
+  return {
+    _id: type,
     type: categoryType.card,
-    content: [
-      findResourceInData(data, 'nt_wright'),
-      findResourceInData(data, 'john_lennox'),
-      findResourceInData(data, 'trinity'),
-      findResourceInData(data, 'william_lane_craig'),
-    ],
+    title: type === 'related' ? 'Related Topics' : 'Sub-Topics',
+    content,
   };
+};
+
+/**
+ * Retrives the sub-topics and related topics rows.
+ */
+const getAdditionalRows = async (
+  sub?: string[],
+  related?: string[]
+): Promise<IRow[]> => {
+  const additionalRows: IRow[] = [];
+  if (sub) {
+    const subRow = await buildRowResources(sub, 'sub');
+    additionalRows.push(subRow);
+  }
+  if (related) {
+    const relatedRow = await buildRowResources(related, 'related');
+    additionalRows.push(relatedRow);
+  }
+  return additionalRows;
+};
+
+/**
+ * Parses an array of unparsed rows by populating the row content.
+ */
+export const parseRows = async (
+  rows: UnparsedRow[],
+  related?: string[],
+  sub?: string[]
+): Promise<IRow[]> => {
+  const parsedRows: IRow[] = await Promise.all(
+    rows.map(async (r: UnparsedRow) => {
+      // Runs for rows of lists. An unparsed list row will always consist of IResource, but further parsing of content is needed.
+      if (r.type === categoryType.list) {
+        const content: IResource[] = await Promise.all(
+          r.content.map(async (c: IResource): Promise<IResource> => {
+            if (c.links && c.links.length > 0) {
+              // Runs if links are already given as IResource or string IDs
+              const parsedLinks: ResourceLink[] = await Promise.all(
+                c.links.map(async (l) => {
+                  if (typeof l === 'string') {
+                    return await idToLink(l);
+                  } else return l;
+                })
+              );
+              return { ...c, links: await Promise.all(parsedLinks) };
+            } else {
+              // Unparsed row content is a string of IDs representing categories
+              const category = findCategoryById(c._id);
+              if (category) {
+                // Populates the content with ResourceLink[] corresponding to the category ID
+                // This will run for the dashboard, theology, apologetics, and Bible commentary pages
+                const links = await getLinksByCategoryId(c._id);
+                return {
+                  _id: category._id,
+                  name: category.pretty,
+                  resourceType: resourceType.topic,
+                  badges: [],
+                  links,
+                };
+              } else {
+                // This will be called for topic pages only.
+                const links = await getLinksByCategoryId(c._id);
+                return { ...c, links };
+              }
+            }
+          })
+        );
+        return { ...r, content };
+      }
+      // Runs for rows of cards. Essentially just parses each row's content into an IResource
+      else {
+        const content: IResource[] = await Promise.all(
+          r.content.map(async (c: string) => {
+            return (await getDataByID(c, true)) as IResource; // TODO: This sucks
+          })
+        );
+        return { ...r, content };
+      }
+    })
+  );
+
+  const additionalRows = await getAdditionalRows(sub, related);
+  const allRows = [...parsedRows, ...additionalRows];
+  return allRows;
+};
+
+const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
+  const listCategories: ICategory[] = getCategoriesByPageAndType(
+    pageType,
+    categoryType.list
+  );
+  const cardCategories: ICategory[] = getCategoriesByPageAndType(
+    pageType,
+    categoryType.card
+  );
+
+  const truncatedListCategories = listCategories.slice(0, 4);
+  const truncatedCardCategories = cardCategories.slice(0, 2);
+
+  const row1Data = await Promise.all(
+    truncatedListCategories.map(async (category) => {
+      const resourceLinks = await getLinksByCategory(category);
+      return {
+        category,
+        resourceLinks,
+      };
+    })
+  );
+
+  // Row 1 will only contain lists
+  const row1: IRow = {
+    _id: 'row1',
+    type: categoryType.list,
+    content: getListRowContent(row1Data),
+  };
+
+  // Card rows
   const row2: IRow = {
-    _id: 'bible_commentary_high_level',
-    name: 'High-Level Bible Commentary',
+    _id: truncatedCardCategories[0]._id,
+    title: truncatedCardCategories[0].pretty,
     type: categoryType.card,
-    content: [
-      findResourceInData(data, 'gotquestions'),
-      findResourceInData(data, 'pauline_letters'),
-      findResourceInData(data, 'Jesus_resurrection'),
-      findResourceInData(data, 'bible_project'),
-    ],
+    content: (await getResourcesByCategory(truncatedCardCategories[0])).slice(
+      0,
+      6
+    ),
   };
   const row3: IRow = {
+    _id: truncatedCardCategories[1]._id,
+    title: truncatedCardCategories[1].pretty,
+    type: categoryType.card,
+    content: (await getResourcesByCategory(truncatedCardCategories[1])).slice(
+      0,
+      6
+    ),
+  };
+
+  const rows = Promise.all([row1, row2, row3]);
+  return rows;
+};
+
+/**
+ * Retrieves the necessary data for a full dashboard page.
+ */
+export const getDashboardData = async (): Promise<IPage> => {
+  const row1: UnparsedRow = {
+    _id: 'theology_intro',
+    title: 'Introduction to Theology',
+    type: categoryType.card,
+    content: ['nt_wright', 'john_lennox', 'trinity', 'william_lane_craig'],
+  };
+  const row2: UnparsedRow = {
+    _id: 'bible_commentary_high_level',
+    title: 'High-Level Bible Commentary',
+    type: categoryType.card,
+    content: [
+      'gotquestions',
+      'pauline_letters',
+      'Jesus_resurrection',
+      'bible_project',
+    ],
+  };
+  const row3: UnparsedRow = {
     _id: 'apologetics_deep',
-    name: 'Deeper Apologetics',
+    title: 'Deeper Apologetics',
     type: categoryType.card,
     content: [
-      findResourceInData(data, 'inspiringphilosophy'),
-      findResourceInData(data, 'william_lane_craig'),
-      findResourceInData(data, 'bible_thinker'),
-      findResourceInData(data, 'truth_unites'),
+      'inspiringphilosophy',
+      'william_lane_craig',
+      'bible_thinker',
+      'truth_unites',
     ],
   };
-  const row4: IRow = {
+  const row4: UnparsedRow = {
     _id: 'topics_new_believers',
-    name: 'Topics for New Believers',
+    title: 'Topics for New Believers',
     type: categoryType.card,
-    content: [
-      findResourceInData(data, 'Jesus_resurrection'),
-      findResourceInData(data, 'gospel'),
-      findResourceInData(data, 'ot'),
-      findResourceInData(data, 'nt'),
-    ],
+    content: ['Jesus_resurrection', 'gospel', 'ot', 'nt'],
   };
+
+  const parsedRows = await parseRows([row1, row2, row3, row4]);
 
   return {
     _id: 'dashboard',
     title: 'Dashboard',
-    pageType: pageType.DASHBOARD, // Dashboard will not have a description provided since it is hardcoded
-    rows: [row1, row2, row3, row4],
-    sidebarItems: defaultSidebar, // TODO: Sidebar isn't loading in the frontend? Also the YouTube API is calling when it shouldn't
+    pageType: pageType.dashboard, // Dashboard will not have a description provided since it is hardcoded
+    rows: parsedRows,
+    sidebarItems: defaultSidebar,
   };
 };
 
@@ -130,221 +284,94 @@ export const getDashboardRows = async (): Promise<IPage> => {
  * Retrieves the necessary data for the theology page.
  */
 export const getTheologyData = async (): Promise<IPage> => {
-  const listCategories: ICategory[] = getCategoriesByPageAndType(
-    'theology',
-    categoryType.list
-  );
-  const cardCategories: ICategory[] = getCategoriesByPageAndType(
-    'theology',
-    categoryType.card
-  );
-
-  const truncatedListCategories = listCategories.slice(0, 4);
-  const truncatedCardCategories = cardCategories.slice(0, 2);
-
-  const getRows = async (): Promise<IRow[]> => {
-    const row1Data = await Promise.all(
-      truncatedListCategories.map(async (category) => {
-        const resourceLinks = await getLinksByCategory(category);
-        return {
-          category,
-          resourceLinks,
-        };
-      })
-    );
-
-    // Row 1 will only contain lists
-    const row1: IRow = {
-      _id: 'row1',
-      content: getListRowContent(row1Data),
-    };
-
-    const row2: IRow = {
-      _id: truncatedCardCategories[0]._id,
-      name: truncatedCardCategories[0].pretty,
-      type: categoryType.card,
-      content: (await getResourcesByCategory(truncatedCardCategories[0])).slice(
-        0,
-        6
-      ),
-    };
-
-    const row3: IRow = {
-      _id: truncatedCardCategories[1]._id,
-      name: truncatedCardCategories[1].pretty,
-      type: categoryType.card,
-      content: (await getResourcesByCategory(truncatedCardCategories[1])).slice(
-        0,
-        6
-      ),
-    };
-
-    const rows = Promise.all([row1, row2, row3]);
-    return rows;
-  };
-
+  const rows = await buildPageRows(pageType.theology);
   const pageData: IPage = {
     _id: 'theology',
     title: 'Theology',
-    pageType: pageType.THEOLOGY,
+    pageType: pageType.theology,
     longDesc:
       'Theology is the study of aspects of Scripture and God. Theologians pour over original manuscripts of the Bible to determine the precise meaning of certain passages or phrases. Theologians ask questions such as "what is the nature of God?" and "was Noah\'s flood localized to the Middle East or globally?". Below, you will find some resources on certain topics, in addition to sections of the Bible.',
-    rows: await getRows(),
+    rows,
   };
   return Promise.resolve(pageData);
 };
 
-const getResourceById = async (id: string): Promise<IResource> => {
-  const topicPage: IPage | null = await Topics.findById(id);
-  if (topicPage === null) {
-    const resource: IResource | null = await Resources.findById(id);
-    if (resource === null) {
-      console.error(`Error: No topic or resource found`);
-      return dummyResource;
-    }
-    return resource;
-  }
-  return pageDataToResource(topicPage);
+/**
+ * Retrieves the necessary data for the Bible commentary page.
+ */
+export const getCommentaryData = async (): Promise<IPage> => {
+  const rows = await buildPageRows(pageType.commentary);
+  const pageData: IPage = {
+    _id: 'commentary',
+    title: 'Bible Commentary',
+    pageType: pageType.commentary,
+    longDesc:
+      "The ESV Bible contains 756,846 words. Scholars have spent the past few thousand years trying to discern and truly understand every one of these words of God's divine speech in the form of Scripture. While the Bible remains the greatest and most popular book in history, many people, indeed most, don't really understand its contents. Verses are thrown around without context and its words are easily twisted by malicious actors. There is a greater need than ever to truly understand Scripture with the context of scholarship, church history, and orthodoxy.\n\nAnd while none of these can answer every single question we might have, many of the most common and misunderstood verses have clearer implications than ever. And as time goes on, we come ever closer to obtaining a richer understanding of Scripture than many of our predecessors had.\n\nBut, what exactly does the Bible say? What is the overarching message of Scripture? How much is it really about Jesus? This page contains commentary relating to every book of Scripture. Each book has its own page with apologetics, theology, and commentary resources to dive deeper.",
+    rows,
+  };
+  return Promise.resolve(pageData);
 };
 
-const parseTopicRows = async (topic: IPage): Promise<IRow[]> => {
-  const parsedRows: IRow[] = await Promise.all(
-    topic.rows.map(async (r: IRow) => {
-      if (r.type === categoryType.list) {
-        const newContent: IResource[] = await Promise.all(
-          r.content.map(async (c: IResource | string) => {
-            if (typeof c === 'string') {
-              // TODO: This needs to return an IResource[]
-              const resource = await getResourceById(c);
-              console.log(resource);
-              // If this is a string, it will be a resource/topic that already exists
-              return {
-                _id: resource._id,
-                platform: 'solomon',
-                url: '', // TODO: I guess the frontend might calculate this? It feels terrible though
-                displayText: resource.name,
-                tooltip: resource.shortDesc,
-              };
-            }
-            const links = await getLinksByCategoryId(c._id);
-            return { ...c, links };
-          })
-        );
-        return { ...r, content: newContent };
-      } else {
-        const newContent: IResource[] = await Promise.all(
-          r.content.map(async (c: IResource | string) => {
-            if (typeof c === 'string') {
-              const res = await getResourceById(c);
-              console.log(res);
-              return res;
-            } else {
-              return c;
-            }
-          })
-        );
-        return { ...r, content: newContent };
-      }
-    })
-  );
-  const additionalRows: IRow[] = [];
-  if (topic.sub) {
-    const content = await Promise.all(
-      topic.sub.map(async (id: string) => {
-        // Find topic by ID
-        const dataTopic: IPage | null = await Topics.findById(id);
-        if (dataTopic === null) {
-          console.error('Error: Topic does not exist in list.');
-          return dummyResource; // TODO: This will certainly not be a dummy, but it exists for now until topics are done
-        }
-        return pageDataToResource(dataTopic);
-      })
-    );
-    additionalRows.push({
-      _id: 'sub_topics',
-      name: 'Sub-Topics',
-      type: categoryType.card,
-      content,
-    });
-  }
-  if (topic.related) {
-    const content = await Promise.all(
-      topic.related.map(async (id: string) => {
-        // Find topic by ID
-        const dataTopic: IPage | null = await Topics.findById(id);
-        if (dataTopic === null) {
-          console.error('Error: Topic does not exist in list.');
-          return dummyResource;
-        }
-        return pageDataToResource(dataTopic);
-      })
-    );
-    additionalRows.push({
-      _id: 'related_topics',
-      name: 'Related Topics',
-      type: categoryType.card,
-      content,
-    });
-  }
-  const allRows = await Promise.all([...parsedRows, ...additionalRows]);
-  return allRows;
-};
-
+/**
+ * Retrieves the necessary data for a topic page.
+ */
 export const getTopicData = async (topicId: string): Promise<IPage> => {
-  const topic = topics.find((t) => t._id === topicId) as IPage;
+  let topic = (await Topics.findById(topicId)
+    .populate('rows.content')
+    .lean()) as unknown as UnparsedPage;
   if (!topic) {
     console.error(`Topic "${topicId}" not found`);
     throw new Error(`Topic "${topicId}" not found.`);
   }
-  const rows = await parseTopicRows(topic);
+  const rows = await parseRows(topic.rows, topic.sub, topic.related);
   return { ...topic, rows };
 };
 
+//? Glossary Page
+
 const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+const regex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * Returns model values that have an ID that begins with each letter of the alphabet
+ * @param model
+ * @param mapFn
+ * @returns
+ */
+const getByLetter = async <T>(
+  model: { find: (query: object) => Promise<T[]> },
+  mapFn: (t: T) => GlossaryItem
+): Promise<GlossaryData[]> => {
+  return await Promise.all(
+    alphabet.map(async (letter) => {
+      const data = (await model.find({
+        _id: { $regex: new RegExp(`^${regex(letter)}`, 'i') },
+      })) as T[];
+      const content: GlossaryItem[] = data.map((t) => mapFn(t));
+      return {
+        letter,
+        content,
+      };
+    })
+  );
+};
+
 /**
  * Retrieves all resources by letter.
  */
 const getGlossaryResources = async (): Promise<GlossaryData[]> => {
-  return await Promise.all(
-    alphabet.map(async (letter) => {
-      const regex = letter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const resources = (await Resources.find({
-        _id: { $regex: new RegExp(`^${regex}`, 'i') },
-      })) as IResource[];
-      const content: GlossaryItem[] = resources.map((t) => ({
-        _id: t._id,
-        pretty: t.creator ? `${t.name} - ${t.creator}` : t.name,
-        type: t.type,
-      }));
-      return {
-        letter,
-        content,
-      };
-    })
-  );
+  return await getByLetter<IResource>(Resources, (t: IResource) => ({
+    _id: t._id,
+    pretty: t.creator ? `${t.name} - ${t.creator}` : t.name,
+    type: t.resourceType,
+  }));
 };
-/**
- * Retrieves all topics by letter.
- */
 const getGlossaryTopics = async (): Promise<GlossaryData[]> => {
-  return await Promise.all(
-    alphabet.map(async (letter) => {
-      const regex = letter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const topics = (await Topics.find({
-        _id: { $regex: new RegExp(`^${regex}`, 'i') },
-      })) as IPage[];
-      const content: GlossaryItem[] = topics.map((t) => ({
-        _id: t._id,
-        pretty: t.title,
-      }));
-      return {
-        letter,
-        content,
-      };
-    })
-  );
+  return await getByLetter<IPage>(Topics, (t: IPage) => ({
+    _id: t._id,
+    pretty: t.title,
+  }));
 };
-
 export const getGlossaryData = async (): Promise<GlossaryPage> => {
   const data = {
     resources: await getGlossaryResources(),

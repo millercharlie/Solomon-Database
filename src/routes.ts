@@ -66,6 +66,16 @@ export default function DataRoutes(app: Application) {
       res.status(500).json({ error: `Failed to fetch theology page. ${e}` });
     }
   };
+  const fetchCommentary = async (req: Request, res: Response) => {
+    try {
+      const commentary = await dao.getCommentary();
+      res.json(commentary);
+    } catch (e) {
+      res
+        .status(500)
+        .json({ error: `Failed to fetch Bible commentary page. ${e}` });
+    }
+  };
   const fetchGlossary = async (req: Request, res: Response) => {
     try {
       const glossary = await dao.getGlossary();
@@ -84,13 +94,39 @@ export default function DataRoutes(app: Application) {
       res.status(500).json({ error: `Failed to fetch topic page. ${e}` });
     }
   };
+  const fetchBibleInfo = async (req: Request, res: Response) => {
+    try {
+      console.log(req.params);
+      const dataId = req.params.dataId as string;
+      const bibleInfo = await dao.getBibleInfo(dataId);
+      res.json(bibleInfo);
+    } catch (e) {
+      res.status(500).json({ error: `Failed to fetch Bible book. ${e}` });
+    }
+  };
+  const fetchBibleBook = async (req: Request, res: Response) => {
+    try {
+      const bookId = req.params.bookId as string;
+      const bibleBook = await dao.getBibleBook(bookId);
+      res.json(bibleBook);
+    } catch (e) {
+      res.status(500).json({ error: `Failed to fetch Bible book. ${e}` });
+    }
+  };
+  const fetchAllBibleBooks = async (req: Request, res: Response) => {
+    try {
+      const bible = await dao.getAllBibleBooks();
+      res.json(bible);
+    } catch (e) {
+      res.status(500).json({ error: `Failed to fetch all Bible books. ${e}` });
+    }
+  };
 
   const fetchCategoriesByPageAndType = async (req: Request, res: Response) => {
     try {
-      const data = await dao.getCategoriesByPageAndType(
-        req.params.pageId,
-        req.params.categoryType
-      );
+      const pageId = req.params.pageId as string;
+      const categoryType = req.params.categoryType;
+      const data = await dao.getCategoriesByPageAndType(pageId, categoryType);
       res.json(data);
     } catch (e) {
       res.status(500).json({
@@ -99,11 +135,21 @@ export default function DataRoutes(app: Application) {
     }
   };
 
+  const search = async (req: Request, res: Response) => {
+    try {
+      const results = await dao.search(req.params.query);
+      res.json(results);
+    } catch (e) {
+      res.status(500).json({ error: `Search query failed. ${e}` });
+    }
+  };
+
   app.use(express.json());
 
   // Fetch various pages
   app.get('/api/pages/dashboard', fetchDashboard);
   app.get('/api/pages/theology', fetchTheology);
+  app.get('/api/pages/commentary', fetchCommentary);
   app.get('/api/pages/glossary', fetchGlossary);
 
   // Retrieve resources
@@ -111,6 +157,15 @@ export default function DataRoutes(app: Application) {
   app.get('/api/resource/:id', fetchResourceById);
   app.post('/api/resources', addNewResource);
 
+  // Retrieve topics
   app.get('/api/pages/:pageId/:categoryType', fetchCategoriesByPageAndType);
   app.get('/api/topic/:topicId', fetchTopic);
+
+  // Retrieve Bible information
+  app.get('/api/bible/books', fetchAllBibleBooks);
+  app.get('/api/bible/:topicId', fetchTopic);
+  app.get('/api/bible/book/:bookId', fetchBibleBook);
+
+  // Search functionality
+  app.get('/api/search/:query', search);
 }

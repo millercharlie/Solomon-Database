@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import { MiscLinks, Resources } from './models/Resources.ts';
-import { Topics } from './models/Pages.ts';
+import { Bible, Topics } from './models/Pages.ts';
 import resources from './data/resources.js';
 import miscLinks from './data/miscLinks.js';
 import topics from './data/topics.js';
+import bible from './data/bible.js';
 
 /**
  * Seed function to restart MongoDB
@@ -21,11 +22,13 @@ const seed = async () => {
   await Resources.deleteMany({});
   await MiscLinks.deleteMany({});
   await Topics.deleteMany({});
+  await Bible.deleteMany({});
 
   // Insert all resources
   await Resources.insertMany(resources);
   await MiscLinks.insertMany(miscLinks);
   await Topics.insertMany(topics);
+  await Bible.insertMany(bible);
   await mongoose.disconnect();
 };
 
