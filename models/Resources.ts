@@ -4,6 +4,13 @@ import { badges, platforms, resourceType, apiSource } from '../src/enums';
 import { Everything } from './Everything';
 
 /**
+ * API to be called. Can only be YouTube for now.
+ */
+type IResourceAPI = {
+  platform: 'youtube'; // | 'amazon' | 'tiktok'
+  queryParam: string; // For YouTube, this will be a username
+};
+/**
  * Resource link which includes a platform and the actual link.
  */
 export type ResourceLink = {
@@ -25,6 +32,7 @@ export interface IResource {
   longDesc?: string;
   badges: badges[];
   links?: ResourceLink[] | string[];
+  api?: IResourceAPI;
 }
 
 /**

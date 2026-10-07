@@ -6,14 +6,7 @@ export default [
     color: '#00679A',
     shortDesc: 'Reformed Theologian focusing on apologetics, debates, and more',
     tags: ['theology_intro', 'deeper_apologetics'],
-    badges: [
-      'video',
-      'website',
-      'podcast',
-      'apologetics',
-      'theology',
-      'ministry',
-    ],
+    badges: ['apologetics', 'theology', 'ministry'],
     links: [
       {
         platform: 'personal',

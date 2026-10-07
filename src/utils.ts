@@ -1,18 +1,6 @@
 import { Everything, EverythingType } from '../models/Everything';
-import {
-  Bible,
-  ICategory,
-  IPage,
-  IRow,
-  UnparsedPage,
-  UnparsedRow,
-} from '../models/Pages';
-import {
-  IResource,
-  MiscLinks,
-  ResourceLink,
-  Resources,
-} from '../models/Resources';
+import { Bible, ICategory, IPage, IRow, UnparsedPage } from '../models/Pages';
+import { IResource, MiscLinks, ResourceLink } from '../models/Resources';
 import { dummyResource, dummyResourceLink } from './dummy';
 import { resourceType } from './enums';
 import { parseRows } from './pageLogic';
@@ -35,6 +23,23 @@ export const pageDataToResource = (
     longDesc: topic.longDesc,
     badges: [], // TODO: I might add badges to pages later
   };
+};
+
+/**
+ * Converts every type of data (except miscellaneous links) into a resource.
+ */
+export const everythingToResource = (data: EverythingType): IResource => {
+  switch (data.type) {
+    case 'bible':
+      return pageDataToResource(data, resourceType.bibleBook);
+    case 'topic':
+    case 'page':
+      return pageDataToResource(data, resourceType.topic);
+    case 'resource':
+      return data;
+    case 'miscLink':
+      throw new Error(`Link cannot be converted into a resource`);
+  }
 };
 
 /**
@@ -86,15 +91,15 @@ export const findResourceInData = (
 };
 
 /**
- * Retrieves resources by category
+ * Retrieves data by category
  * @returns Promise<IResource[]>
  */
 export const getResourcesByCategory = async (
   category: ICategory
-): Promise<IResource[]> => {
-  const data = (await Resources.find({
+): Promise<EverythingType[]> => {
+  const data = (await Everything.find({
     tags: category._id,
-  })) as IResource[];
+  })) as EverythingType[];
   return data;
 };
 
@@ -135,7 +140,6 @@ export const idToLink = async (id: string): Promise<ResourceLink> => {
     console.error(`Resource/Topic not found with id ${id}`);
     return dummyResourceLink;
   }
-  console.log(data.type);
   switch (data.type) {
     case 'resource':
       return {
@@ -200,6 +204,7 @@ export const getDataByID = async (
         longDesc: data.longDesc,
         badges: data.badges,
         links: data.links,
+        api: data.api,
       };
     case 'miscLink':
       return {

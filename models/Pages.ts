@@ -56,6 +56,7 @@ export interface UnparsedPage {
   longDesc?: string;
   sidebarItems?: SidebarItem[];
   needsHelp?: boolean;
+  tags?: string[];
   related?: string[];
   sub?: string[];
 }
@@ -119,6 +120,7 @@ export const pageSchema = new Schema({
   title: { type: String, required: true },
   rows: { type: [rowSchema], required: true },
   sub: [String],
+  tags: [String],
   related: [String],
   pageType: { type: String, enum: pageType },
   color: String,

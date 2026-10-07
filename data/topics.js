@@ -46,6 +46,7 @@ export default [
       },
     ],
     sub: ['Jesus_resurrection', 'christophanies', 'crucifixion', 'atonement'],
+    tags: ['God', 'Jesus'],
     related: ['trinity', 'acts', 'gospel', 'revelation'],
   },
 
@@ -59,6 +60,7 @@ export default [
     longDesc:
       "The resurrection of Jesus Christ is the most consequential event in human history. It is the single historic event that Christianity's credibility is dependent on (1 Corinthians 15:14). For many, this one event is a stumbling block to accepting Christ as Lord, while others have grown up believing this event.\n\nBut, what is the evidence for the resurrection of Christ? Are there alternative theories about the beginnings of Christianity? Resources in this page include discussing the theology behind the resurrection in addition to apologetics resources regarding evidence of the resurrection.",
     rows: [],
+    tags: ['God', 'Jesus'],
     related: ['Jesus', 'crucifixion', 'atonement'],
   },
 
@@ -71,6 +73,7 @@ export default [
     longDesc:
       "The death of Jesus Christ by crucifixion is one of the most sure facts of history. Nearly every scholar, be skeptic or Christian, acknowledges the historical accuracy of this event. Christians believe this death was the crux of God's ultimate plan for the salvation of the world.\n\nBut, did Jesus really die this way? What evidence is there for this event? This page houses resources to answer your questions about the death of Jesus Christ.",
     rows: [],
+    tags: ['Jesus', 'atonement'],
     related: ['Jesus', 'atonement', 'crucifixion', 'Jesus_resurrection'],
   },
 

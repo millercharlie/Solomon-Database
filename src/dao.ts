@@ -9,9 +9,10 @@ import {
   getTopicData,
   getCommentaryData,
 } from './pageLogic';
-import { categoryType } from './enums';
+import { categoryType, pageType } from './enums';
 import search from './search';
 import { getBibleBookData, getBibleInfoData } from './utils';
+import { getYoutubeDataForCreator, YouTubeData } from './youtube';
 
 interface SolomonDao {
   getAllResources(): Promise<IResource[]>;
@@ -22,12 +23,13 @@ interface SolomonDao {
   getCommentary(): Promise<IPage>;
   getGlossary(): Promise<GlossaryPage>;
   getTopic(topicId: string): Promise<IPage>;
-  findCategoryById(categoryId: string): Promise<ICategory>;
+  findCategoryById(categoryId: string): Promise<ICategory | null>;
   getCategoriesByPageAndType(
     pageId: string,
     categoryId: categoryType
   ): Promise<ICategory[]>;
   search(query: string): Promise<ResourceLink[]>;
+  getYoutubeDataForCreator(userId: string): Promise<YouTubeData>;
 }
 
 /**
@@ -37,7 +39,7 @@ class SolomonDaoImplementation implements SolomonDao {
   async getAllResources(): Promise<IResource[]> {
     return Resources.find();
   }
-  async getResourceById(id: string): Promise<IResource | null> {
+  async getResourceById(id: string): Promise<IResource> {
     return Resources.findById(id);
   }
   async addResource(resource: IResource): Promise<IResource> {
@@ -70,15 +72,20 @@ class SolomonDaoImplementation implements SolomonDao {
     return Bible.find();
   }
 
-  async findCategoryById(categoryId: string): Promise<ICategory> {
-    return findCategoryById(categoryId);
+  async findCategoryById(categoryId: string): Promise<ICategory | null> {
+    const category = findCategoryById(categoryId);
+    if (!category) return null;
+    return category;
   }
   async search(query: string): Promise<ResourceLink[]> {
     return search(query);
   }
+  async getYoutubeDataForCreator(userId: string): Promise<YouTubeData> {
+    return getYoutubeDataForCreator(userId);
+  }
 
   async getCategoriesByPageAndType(
-    pageId: string,
+    pageId: pageType,
     categoryType: categoryType
   ): Promise<ICategory[]> {
     return getCategoriesByPageAndType(pageId, categoryType);

@@ -1,6 +1,7 @@
 import { IResource } from '../models/Resources';
 import { solomonDao } from './dao';
 import express, { Application, Request, Response } from 'express';
+import { categoryType, pageType } from './enums';
 
 export default function DataRoutes(app: Application) {
   const dao = solomonDao;
@@ -124,8 +125,8 @@ export default function DataRoutes(app: Application) {
 
   const fetchCategoriesByPageAndType = async (req: Request, res: Response) => {
     try {
-      const pageId = req.params.pageId as string;
-      const categoryType = req.params.categoryType;
+      const pageId = req.params.pageId as pageType;
+      const categoryType = req.params.categoryType as categoryType;
       const data = await dao.getCategoriesByPageAndType(pageId, categoryType);
       res.json(data);
     } catch (e) {
@@ -137,10 +138,23 @@ export default function DataRoutes(app: Application) {
 
   const search = async (req: Request, res: Response) => {
     try {
-      const results = await dao.search(req.params.query);
+      const results = await dao.search(req.params.query as string);
       res.json(results);
     } catch (e) {
       res.status(500).json({ error: `Search query failed. ${e}` });
+    }
+  };
+
+  const youtube = async (req: Request, res: Response) => {
+    try {
+      const youtubeData = await dao.getYoutubeDataForCreator(
+        req.params.userId as string
+      );
+      res.json(youtubeData);
+    } catch (e) {
+      res
+        .status(500)
+        .json({ error: `Failed to fetch YouTube data for creator. ${e}` });
     }
   };
 
@@ -168,4 +182,7 @@ export default function DataRoutes(app: Application) {
 
   // Search functionality
   app.get('/api/search/:query', search);
+
+  // External APIs
+  app.get('/api/youtube/:userId', youtube);
 }

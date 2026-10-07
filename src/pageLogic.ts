@@ -22,6 +22,7 @@ import {
   getLinksByCategoryId,
   getDataByID,
   idToLink,
+  everythingToResource,
 } from './utils';
 import { dummyResource } from './dummy';
 import { Everything, EverythingType } from '../models/Everything';
@@ -206,24 +207,30 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
     content: getListRowContent(row1Data),
   };
 
+  // Row content is initially of EverythingType (Bible books, topics, creators, etc.) and must be converted into IResource
+  const row1Content: IResource[] = (
+    await getResourcesByCategory(truncatedCardCategories[0])
+  )
+    .slice(0, 6)
+    .map((i): IResource => everythingToResource(i));
+  const row2Content: IResource[] = (
+    await getResourcesByCategory(truncatedCardCategories[1])
+  )
+    .slice(0, 6)
+    .map((i): IResource => everythingToResource(i));
+
   // Card rows
   const row2: IRow = {
     _id: truncatedCardCategories[0]._id,
     title: truncatedCardCategories[0].pretty,
     type: categoryType.card,
-    content: (await getResourcesByCategory(truncatedCardCategories[0])).slice(
-      0,
-      6
-    ),
+    content: row1Content,
   };
   const row3: IRow = {
     _id: truncatedCardCategories[1]._id,
     title: truncatedCardCategories[1].pretty,
     type: categoryType.card,
-    content: (await getResourcesByCategory(truncatedCardCategories[1])).slice(
-      0,
-      6
-    ),
+    content: row2Content,
   };
 
   const rows = Promise.all([row1, row2, row3]);
