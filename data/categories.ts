@@ -89,7 +89,12 @@ const categories: Record<
   [pageType.commentary]: [
     {
       _id: 'verse_by_verse_commentary',
-      pretty: 'Verse by Verse Commentary Resources',
+      pretty: 'Verse by Verse Commentary',
+      type: categoryType.list,
+    },
+    {
+      _id: 'ot_common_topics',
+      pretty: 'Common Topics',
       type: categoryType.list,
     },
     {
@@ -433,8 +438,8 @@ const categories: Record<
       type: categoryType.list,
     },
     {
-      _id: 'pauline_letters',
-      pretty: 'The Letters of Paul',
+      _id: 'commentary_by_category',
+      pretty: 'By Biblical Category',
       type: categoryType.card,
     },
     {

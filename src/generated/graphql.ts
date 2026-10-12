@@ -200,7 +200,7 @@ export type Row = {
   __typename?: 'Row';
   _id: Scalars['String']['output'];
   content: RowContent;
-  name?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
   type?: Maybe<CategoryType>;
 };
 
@@ -463,7 +463,7 @@ export type ResourceRowContentResolvers<ContextType = any, ParentType extends Re
 export type RowResolvers<ContextType = any, ParentType extends ResolversParentTypes['Row'] = ResolversParentTypes['Row']> = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   content?: Resolver<ResolversTypes['RowContent'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['CategoryType']>, ParentType, ContextType>;
 };
 

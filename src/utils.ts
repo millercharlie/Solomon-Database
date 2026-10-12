@@ -38,6 +38,7 @@ export const everythingToResource = (data: EverythingType): IResource => {
     case 'resource':
       return data;
     case 'miscLink':
+      console.log(data);
       throw new Error(`Link cannot be converted into a resource`);
   }
 };
@@ -94,12 +95,24 @@ export const findResourceInData = (
  * Retrieves data by category
  * @returns Promise<IResource[]>
  */
-export const getResourcesByCategory = async (
-  category: ICategory
+export const getDataByCategory = async (
+  category: ICategory,
+  amount?: number,
+  filterFn?: (r: EverythingType) => boolean
 ): Promise<EverythingType[]> => {
-  const data = (await Everything.find({
+  let data = (await Everything.find({
     tags: category._id,
   })) as EverythingType[];
+  if (filterFn) {
+    // console.log('before filter');
+    // console.log(data);
+    data = data.filter(filterFn);
+  }
+  if (amount) {
+    // console.log('called');
+    // console.log(data);
+    return data.slice(0, amount);
+  }
   return data;
 };
 
@@ -113,6 +126,7 @@ export const getLinksByCategory = async (
   const data = (await MiscLinks.find({
     tags: category._id,
   })) as ResourceLink[];
+  console.log(data);
   return data;
 };
 

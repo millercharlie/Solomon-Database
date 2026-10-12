@@ -59,7 +59,7 @@ type StringRowContent {
 union RowContent = ResourceRowContent | StringRowContent
 type Row {
   _id: String!
-  name: String
+  title: String
   type: CategoryType
   content: RowContent!
 }

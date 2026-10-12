@@ -198,40 +198,6 @@ export default [
   },
 
   {
-    _id: 'pauline_letters',
-    title: 'The Letters of Paul',
-    pageType: 'topic',
-    color: '#AC2121',
-    shortDesc:
-      'Illustrates the 13 letters Paul wrote to various churches and Christians during his ministry.',
-    longDesc:
-      "Paul wrote a majority of the New Testament in the form of letters to various churches and Christians. His work was instrumental in bringing the Gospel to the Gentiles. This topic includes all of Paul's letters.",
-    rows: [
-      {
-        _id: 'pauline_letters_churches',
-        title: "Paul's Letters to the Churches",
-        type: 'card',
-        content: [
-          'romans',
-          '1_corinthians',
-          '2_corinthians',
-          'galatians',
-          'ephesians',
-          'philippians',
-          'colossians',
-          '1_thessalonians',
-          '2_thessalonians',
-        ],
-      },
-      {
-        _id: 'pauline_letters_individuals',
-        title: "Paul's Letters to Individuals",
-        type: 'card',
-        content: ['1_timothy', '2_timothy', 'titus', 'philemon'],
-      },
-    ],
-  },
-  {
     _id: 'ot',
     title: 'The Old Testament',
     pageType: 'bibleBook',
@@ -308,6 +274,7 @@ export default [
         ], // TODO: These are all placeholders. I don't know much about each scholar aside from passing references
       },
     ],
+    tags: ['commentary_by_category', 'ot'],
     related: ['nt', 'gospels', 'prophecies', 'christophanies'],
     sub: [
       'creation',
@@ -400,6 +367,7 @@ export default [
         content: ['wes_huff', 'nt_wright', 'bart_ehrman', 'richard_bauckham'],
       },
     ],
+    tags: ['commentary_by_category', 'nt'],
     sub: [
       'creation',
       'flood',
@@ -409,6 +377,68 @@ export default [
       'minor_prophets',
       'judges',
     ],
+  },
+
+  {
+    _id: 'pauline_letters',
+    title: 'The Letters of Paul',
+    pageType: 'topic',
+    color: '#9a401f',
+    shortDesc:
+      'Discusses the letters written by Paul to companions and churches.',
+    longDesc:
+      'The Apostle Paul wrote much of the New Testament in the form of letters to various companions and churches around the Mediterranean. Inspired by the Holy Spirit, they contain deep wisdom and advice for how to live godly lives. Paul wrote some of these letters under house arrest, where he would rebuke, praise, or correct fellow believers for their theology and faith.\n\nPaul\'s letters have unfortunately become scrutinized by people who wish to discredit the Bible or Paul\'s teachings. But, are they correct? How do we even know Paul wrote these letters? Does he contradict the teachings of Jesus or the other apostles? This page houses resources to answer all of these questions. It contains both links to deeper commentary within specific Pauline letters, in addition to apologetic and theological information contained within the letters. It will not go into the life of Paul personally, which can all be found in the resource entitled "Paul" on Solomon.',
+    rows: [
+      {
+        _id: 'row1',
+        type: 'list',
+        content: [
+          {
+            _id: 'paul_v_apostles',
+            name: 'Paul v. The Apostles',
+            type: 'apologetics',
+            shortDesc: 'Does Paul contradict the other apostles?',
+            links: [],
+          },
+          {
+            _id: 'paul_themes',
+            name: "Themes in Paul's letters",
+            type: 'commentary',
+            links: [],
+          },
+          {
+            _id: 'pauline_commentary',
+            name: 'High-Level Commentary',
+            type: 'commentary',
+            links: [],
+          },
+        ],
+      },
+      {
+        _id: 'pauline_letters_churches',
+        title: "Paul's Letters to the Churches",
+        type: 'card',
+        content: [
+          'romans',
+          '1_corinthians',
+          '2_corinthians',
+          'galatians',
+          'ephesians',
+          'philippians',
+          'colossians',
+          '1_thessalonians',
+          '2_thessalonians',
+        ],
+      },
+      {
+        _id: 'pauline_letters_individuals',
+        title: "Paul's Letters to Individuals",
+        type: 'card',
+        content: ['1_timothy', '2_timothy', 'titus', 'philemon'],
+      },
+    ],
+    tags: ['paul', 'nt', 'commentary_by_category'],
+    related: ['acts', 'gospels', 'end_times'],
   },
 ];
 

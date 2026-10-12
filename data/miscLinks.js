@@ -146,6 +146,14 @@ export default [
     tags: ['Jesus', 'trinity', 'daniel_7', 'Jesus_dual_nature'],
   },
   {
+    _id: 'mike_winger_daniel_7-8',
+    platform: 'youtube',
+    tooltip: 'Mike Winger unpacks the prophecies of Daniel 7 and 8',
+    url: 'https://youtu.be/VfQCgNLV6Rw?si=zdBF-gEfdTRSQ_Gj',
+    displayText: 'Fulfilled Prophecy in Daniel 7-8',
+    tags: ['daniel', 'ot_common_topics', 'daniel_7'],
+  },
+  {
     _id: 'ruslan_Jesus_God_man',
     platform: 'youtube',
     tooltip: 'Ruslan reacts to a clip and discusses Jesus being God and man',

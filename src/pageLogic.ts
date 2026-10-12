@@ -17,7 +17,7 @@ import categories from '../data/categories';
 
 import {
   getLinksByCategory,
-  getResourcesByCategory,
+  getDataByCategory,
   pageDataToResource,
   getLinksByCategoryId,
   getDataByID,
@@ -190,6 +190,8 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
   const truncatedListCategories = listCategories.slice(0, 4);
   const truncatedCardCategories = cardCategories.slice(0, 2);
 
+  console.log(truncatedListCategories);
+
   const row1Data = await Promise.all(
     truncatedListCategories.map(async (category) => {
       const resourceLinks = await getLinksByCategory(category);
@@ -208,31 +210,38 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
   };
 
   // Row content is initially of EverythingType (Bible books, topics, creators, etc.) and must be converted into IResource
-  const row1Content: IResource[] = (
-    await getResourcesByCategory(truncatedCardCategories[0])
-  )
-    .slice(0, 6)
-    .map((i): IResource => everythingToResource(i));
   const row2Content: IResource[] = (
-    await getResourcesByCategory(truncatedCardCategories[1])
-  )
-    .slice(0, 6)
-    .map((i): IResource => everythingToResource(i));
+    await getDataByCategory(
+      truncatedCardCategories[0],
+      5,
+      (r) => r.type !== 'miscLink'
+    )
+  ).map((i): IResource => everythingToResource(i));
+  const row3Content: IResource[] = (
+    await getDataByCategory(
+      truncatedCardCategories[1],
+      5,
+      (r) => r.type !== 'miscLink'
+    )
+  ).map((i): IResource => everythingToResource(i));
+
+  console.log({ row2Content, row3Content });
 
   // Card rows
   const row2: IRow = {
     _id: truncatedCardCategories[0]._id,
     title: truncatedCardCategories[0].pretty,
     type: categoryType.card,
-    content: row1Content,
+    content: row2Content,
   };
   const row3: IRow = {
     _id: truncatedCardCategories[1]._id,
     title: truncatedCardCategories[1].pretty,
     type: categoryType.card,
-    content: row2Content,
+    content: row3Content,
   };
 
+  console.log({ row2, row3 });
   const rows = Promise.all([row1, row2, row3]);
   return rows;
 };
@@ -277,6 +286,9 @@ export const getDashboardData = async (): Promise<IPage> => {
   };
 
   const parsedRows = await parseRows([row1, row2, row3, row4]);
+
+  // Testing purposes ONLY
+  // await new Promise((r) => setTimeout(r, 10000));
 
   return {
     _id: 'dashboard',
