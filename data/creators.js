@@ -7,6 +7,7 @@ export default [
     shortDesc: '"Teach. Reach. Encourage. Equip."',
     longDesc: '...',
     badges: ['video', 'apologetics', 'theology'],
+    tags: ['apologetics_online'],
     api: {
       platform: 'youtube',
       queryParam: 'WesHuff',

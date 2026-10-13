@@ -7,7 +7,7 @@ export default [
       'Discusses whether the flood mentioned in Genesis literally covered the globe or was localized to the Middle-East',
     displayText: "Noah's Flood: Global or Local?",
     icon: 'solomon.svg',
-    tags: ['topics_popular'],
+    tags: ['topics_popular', 'apologetics_overview'],
   },
   {
     _id: 'inspiringphilosophy_bible_contradiction_one_link',
@@ -25,7 +25,7 @@ export default [
     url: 'www.wisdomofsolomon.org/topic/yec_v_oec',
     tooltip: 'How long did it take God to create the Heavens and the Earth?',
     icon: 'solomon.svg',
-    tags: ['topics_popular'],
+    tags: ['topics_popular', 'apologetics_pentateuch'],
   },
   {
     _id: 'garden_of_eden_link',
@@ -35,7 +35,7 @@ export default [
     tooltip:
       'Discusses the Biblical account of the Garden of Eden found in Genesis',
     icon: 'youtube.svg',
-    tags: ['topics_popular'],
+    tags: ['topics_popular', 'apologetics_pentateuch'],
   },
   {
     _id: 'isaiah_prophecies_link',
@@ -95,7 +95,7 @@ export default [
     url: '...',
     displayText: 'Augustine of Hippo',
     icon: 'historical_figure.svg',
-    tags: ['historic_theologians'],
+    tags: ['historic_theologians', 'early_christian_apologists'],
   },
   {
     _id: 'thomas_aquinas_link',
@@ -186,6 +186,7 @@ export default [
       'Jesus_resurrection',
       'Jesus_death',
       'Jesus_ministry',
+      'apologetics_overview',
     ],
   },
   {
@@ -219,7 +220,7 @@ export default [
     url: 'https://youtube.com/playlist?list=PL1mr9ZTZb3TVOYpPpjYhTUHXycJrY6P2I&si=J1Wlh6G5-gqCbN90',
     tooltip: 'InspiringPhilosophy playlist comparing Jesus to other gods',
     displayText: 'Was Jesus a copycat Savior?',
-    tags: ['Jesus', 'trinity', 'Jesus_ministry'],
+    tags: ['Jesus', 'trinity', 'Jesus_ministry', 'apologetics_gospels'],
   },
   {
     _id: 'biblehub_Jesus_ministry',
@@ -237,7 +238,7 @@ export default [
     tooltip:
       'InspiringPhilosophy Academy discusses the evidence of the virgin birth',
     displayText: 'Evidence for the Virgin Birth',
-    tags: ['Jesus', 'Jesus_birth'],
+    tags: ['Jesus', 'Jesus_birth', 'apologetics_popular'],
   },
   {
     _id: 'gavin_ortlund_virgin_birth_requirement',
@@ -338,7 +339,7 @@ export default [
     displayText: 'Can the Gospels survive historical scrutiny?',
     tooltip:
       'Wes Huff explores if the Gospel accounts are historically reliable',
-    tags: ['gospels_accuracy', 'gospels'],
+    tags: ['gospels_accuracy', 'gospels', 'apologetics_gospels'],
   },
   {
     _id: 'mike_winger_challenging_contradiction',
@@ -355,7 +356,7 @@ export default [
     displayText: 'Playlist - The Reliability of the Gospels',
     tooltip:
       'InspiringPhilosophy playlist about the historical reliability of the Gospels',
-    tags: ['gospels_accuracy', 'gospels'],
+    tags: ['gospels_accuracy', 'gospels', 'apologetics_gospels'],
   },
 
   {
@@ -365,7 +366,7 @@ export default [
     tooltip:
       'InspiringPhilosophy talks about the imperfect nature of the Law in the Old Testament.',
     displayText: 'The Imperfect Mosaic Law',
-    tags: ['mosaic_law', 'ot_apologetics'],
+    tags: ['mosaic_law', 'ot_apologetics', 'apologetics_popular'],
   },
   {
     _id: 'inspiringphilosophy_trinity_ot',
@@ -374,7 +375,12 @@ export default [
     tooltip:
       'InspiringPhilosophy reveals mentions or implicatations of the Trinity in the Old Testament.',
     displayText: 'The Trinity in the Old Testament',
-    tags: ['trinity', 'ot_apologetics', 'christophanies'],
+    tags: [
+      'trinity',
+      'ot_apologetics',
+      'christophanies',
+      'apologetics_popular',
+    ],
   },
   {
     _id: 'mike_winger_interpret_ot_violence',
@@ -384,7 +390,12 @@ export default [
       "How You Should and Shouldn't Interpret Old Testament Violence",
     tooltip:
       'Mike Winger discusses how Christians can make sense of Old Testament violence',
-    tags: ['trinity', 'ot_apologetics', 'christophanies'],
+    tags: [
+      'trinity',
+      'ot_apologetics',
+      'christophanies',
+      'apologetics_pentateuch',
+    ],
   },
   {
     _id: 'gavin_ortlund_6_minutes_conquest_of_caanan',
@@ -392,14 +403,21 @@ export default [
     url: 'https://youtu.be/oLcFBmjyfx8?si=LjdW7sTrUYTIBmVb',
     displayText: 'The Conquest of Caanan Explained in 6 Minutes',
     tooltip: "Gavin Ortlund succinctly explains Joshua's Conquest of Caanan",
-    tags: ['conquest_of_caanan', 'ot_apologetics'],
+    tags: ['conquest_of_caanan', 'ot_apologetics', 'apologetics_overview'],
   },
   {
     _id: 'gotquestions_why_four_gospels',
     platform: 'personal',
     url: 'https://www.gotquestions.org/four-Gospels.html',
     displayText: 'Why did God give us four Gospels?',
-    tags: ['gospels_intro', 'gospels'],
+    tags: ['gospels_intro', 'gospels', 'apologetics_gospels'],
+  },
+  {
+    _id: 'gotquestions_what_is_apologetics',
+    platform: 'personal',
+    url: 'https://www.gotquestions.org/Christian-apologetics.html',
+    displayText: 'What is Christian apologetics?',
+    tags: ['apologetics_overview'],
   },
   // {
   //   _id: '',

@@ -5,7 +5,7 @@ export default [
     resourceType: 'person',
     color: '#00679A',
     shortDesc: 'Reformed Theologian focusing on apologetics, debates, and more',
-    tags: ['theology_intro', 'deeper_apologetics'],
+    tags: ['theology_intro', 'deeper_apologetics', 'apologetics_online'],
     badges: ['apologetics', 'theology', 'ministry'],
     links: [
       {
@@ -57,7 +57,7 @@ export default [
       'Gavin Ortlund (PhD, Fuller Theological Seminary) is President of Truth Unites, Visiting Professor of Historical Theology at Phoenix Seminary, and Theologian-in-Residence at Immanuel Nashville. He is also an Evangelical theologian and content creator focusing on Christian doctrine, with a particular emphasis on the historical church.\n\nHis content includes refuting particular doctrines, such as the Papacy, responding to other theologions such as C.S. Lewis and Trent Horn, and defending Evangelical and Protestant beliefs, such as Sola Scriptura. All of his content is available for free on YouTube and other podcast sites, and he also sells books online.',
     color: '#104b88',
     badges: ['video', 'podcast', 'website', 'apologetics', 'theology'],
-    tags: ['theology_intro', 'deeper_apologetics'],
+    tags: ['theology_intro', 'deeper_apologetics', 'apologetics_online'],
     api: {
       platform: 'youtube',
       queryParam: 'TruthUnites',
@@ -194,7 +194,7 @@ export default [
     shortDesc: '"Think Biblically About Everything"',
     longDesc: '...',
     badges: ['video', 'podcast', 'apologetics', 'theology'],
-    tags: ['theology_intro'],
+    tags: ['theology_intro', 'apologetics_online'],
     api: {
       platform: 'youtube',
       queryParam: 'MikeWinger',

@@ -77,6 +77,14 @@ export default function DataRoutes(app: Application) {
         .json({ error: `Failed to fetch Bible commentary page. ${e}` });
     }
   };
+  const fetchApologetics = async (req: Request, res: Response) => {
+    try {
+      const apologetics = await dao.getApologetics();
+      res.json(apologetics);
+    } catch (e) {
+      res.status(500).json({ error: `Failed to fetch apologetics page. ${e}` });
+    }
+  };
   const fetchGlossary = async (req: Request, res: Response) => {
     try {
       const glossary = await dao.getGlossary();
@@ -158,12 +166,26 @@ export default function DataRoutes(app: Application) {
     }
   };
 
+  const sidebar = async (req: Request, res: Response) => {
+    try {
+      const sidebarData = await dao.getSidebarData(
+        req.params.pageId as pageType
+      );
+      res.json(sidebarData);
+    } catch (e) {
+      res
+        .status(500)
+        .json({ error: `Failed to fetch sidebar information. ${e}` });
+    }
+  };
+
   app.use(express.json());
 
   // Fetch various pages
   app.get('/api/pages/dashboard', fetchDashboard);
   app.get('/api/pages/theology', fetchTheology);
   app.get('/api/pages/commentary', fetchCommentary);
+  app.get('/api/pages/apologetics', fetchApologetics);
   app.get('/api/pages/glossary', fetchGlossary);
 
   // Retrieve resources
@@ -182,6 +204,9 @@ export default function DataRoutes(app: Application) {
 
   // Search functionality
   app.get('/api/search/:query', search);
+
+  // Sidebar
+  app.get('/api/sidebar/:pageType', sidebar);
 
   // External APIs
   app.get('/api/youtube/:userId', youtube);

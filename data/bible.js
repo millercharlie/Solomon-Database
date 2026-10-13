@@ -6,7 +6,8 @@ export default [
   },
   {
     _id: 'acts',
-    title: 'The Acts of the Apostles',
+    title: 'Book of Acts',
+    longTitle: 'The Acts of the Apostles',
     pageType: 'bibleBook',
     color: '#ec3636',
     shortDesc:
@@ -19,6 +20,7 @@ export default [
   {
     _id: 'daniel',
     title: 'Daniel',
+    longTitle: 'The Book of Daniel',
     pageType: 'bibleBook',
     color: '#db9036',
     shortDesc: "Recounts stories about Daniel's faithfulness and prophecies.",
@@ -31,7 +33,8 @@ export default [
   // The Gospels
   {
     _id: 'matthew',
-    title: 'The Gospel According to Matthew',
+    title: 'Gospel of Matthew',
+    longTitle: 'The Gospel According to Matthew',
     pageType: 'bibleBook',
     color: '#d22c2c',
     shortDesc:
@@ -44,7 +47,8 @@ export default [
   },
   {
     _id: 'mark',
-    title: 'The Gospel According to Mark',
+    title: 'Gospel of Mark',
+    longTtitle: 'The Gospel According to Mark',
     pageType: 'bibleBook',
     color: '#d22c2c',
     shortDesc:
@@ -57,7 +61,8 @@ export default [
   },
   {
     _id: 'luke',
-    title: 'The Gospel According to Luke',
+    title: 'Gospel of Luke',
+    longTitle: 'The Gospel According to Luke',
     pageType: 'bibleBook',
     color: '#d22c2c',
     shortDesc:
@@ -70,7 +75,8 @@ export default [
   },
   {
     _id: 'john',
-    title: 'The Gospel According to John',
+    title: 'Gospel of John',
+    longTitle: 'The Gospel According to John',
     pageType: 'bibleBook',
     color: '#d22c2c',
     shortDesc:
@@ -84,7 +90,8 @@ export default [
 
   {
     _id: 'revelation',
-    title: 'The Revelation of John',
+    title: 'Revelation',
+    longTitle: 'The Revelation of John',
     pageType: 'bibleBook',
     color: '#83a952',
     shortDesc: "John's end-times vision given by Christ.",

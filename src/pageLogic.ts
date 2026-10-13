@@ -12,7 +12,7 @@ import {
   UnparsedRow,
 } from '../models/Pages';
 import { IResource, ResourceLink, Resources } from '../models/Resources';
-import { defaultSidebar } from './sidebar';
+import { getSidebarData } from './sidebar';
 import categories from '../data/categories';
 
 import {
@@ -41,6 +41,7 @@ const getListRowContent = (
   return data.map((set) => ({
     _id: set.category._id,
     name: set.category.pretty,
+    shortDesc: set.category.shortDesc,
     links: set.resourceLinks,
     resourceType: resourceType.placeholder,
     badges: [badges.placeholder],
@@ -190,8 +191,6 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
   const truncatedListCategories = listCategories.slice(0, 4);
   const truncatedCardCategories = cardCategories.slice(0, 2);
 
-  console.log(truncatedListCategories);
-
   const row1Data = await Promise.all(
     truncatedListCategories.map(async (category) => {
       const resourceLinks = await getLinksByCategory(category);
@@ -201,6 +200,8 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
       };
     })
   );
+
+  console.log(row1Data);
 
   // Row 1 will only contain lists
   const row1: IRow = {
@@ -225,8 +226,6 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
     )
   ).map((i): IResource => everythingToResource(i));
 
-  console.log({ row2Content, row3Content });
-
   // Card rows
   const row2: IRow = {
     _id: truncatedCardCategories[0]._id,
@@ -241,7 +240,6 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
     content: row3Content,
   };
 
-  console.log({ row2, row3 });
   const rows = Promise.all([row1, row2, row3]);
   return rows;
 };
@@ -295,7 +293,7 @@ export const getDashboardData = async (): Promise<IPage> => {
     title: 'Dashboard',
     pageType: pageType.dashboard, // Dashboard will not have a description provided since it is hardcoded
     rows: parsedRows,
-    sidebarItems: defaultSidebar,
+    sidebarItems: getSidebarData(pageType.dashboard),
   };
 };
 
@@ -326,6 +324,22 @@ export const getCommentaryData = async (): Promise<IPage> => {
     pageType: pageType.commentary,
     longDesc:
       "The ESV Bible contains 756,846 words. Scholars have spent the past few thousand years trying to discern and truly understand every one of these words of God's divine speech in the form of Scripture. While the Bible remains the greatest and most popular book in history, many people, indeed most, don't really understand its contents. Verses are thrown around without context and its words are easily twisted by malicious actors. There is a greater need than ever to truly understand Scripture with the context of scholarship, church history, and orthodoxy.\n\nAnd while none of these can answer every single question we might have, many of the most common and misunderstood verses have clearer implications than ever. And as time goes on, we come ever closer to obtaining a richer understanding of Scripture than many of our predecessors had.\n\nBut, what exactly does the Bible say? What is the overarching message of Scripture? How much is it really about Jesus? This page contains commentary relating to every book of Scripture. Each book has its own page with apologetics, theology, and commentary resources to dive deeper.",
+    rows,
+  };
+  return Promise.resolve(pageData);
+};
+
+/**
+ * Retrieves the necessary data for the apologetics page.
+ */
+export const getApologeticsData = async (): Promise<IPage> => {
+  const rows = await buildPageRows(pageType.apologetics);
+  const pageData: IPage = {
+    _id: 'apologetics',
+    title: 'Apologetics',
+    pageType: pageType.apologetics,
+    longDesc:
+      'Apologetics is the study of the truthfulness of Scripture and Christianity. This encapsulates answering common questions such as “does God exist?” and “did Jesus really rise from the dead?” Those who study apologetics, called apologists, use varying philosophical, scientific, historical, and logical arguments to defend the faith.',
     rows,
   };
   return Promise.resolve(pageData);

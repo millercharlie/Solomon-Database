@@ -49,6 +49,7 @@ export interface SidebarItem {
 export interface UnparsedPage {
   _id: string;
   title: string;
+  longTitle?: string;
   color?: string;
   rows: UnparsedRow[];
   pageType: pageType;
@@ -63,6 +64,7 @@ export interface UnparsedPage {
 export interface IPage {
   _id: string;
   title: string;
+  longTitle?: string;
   color?: string;
   rows: IRow[];
   pageType: pageType;
@@ -76,7 +78,7 @@ export interface IPage {
 export interface ICategory {
   _id: string;
   pretty: string;
-  description?: string;
+  shortDesc?: string;
   type: categoryType;
 }
 
@@ -109,15 +111,11 @@ const rowSchema = new Schema(
   },
   { discriminatorKey: 'type', _id: false }
 );
-export const categorySchema = new Schema({
-  _id: { type: String, required: true },
-  pretty: { type: String, required: true },
-  type: { type: String, enum: categoryType, required: true },
-});
 
 export const pageSchema = new Schema({
   _id: { type: String, required: true },
   title: { type: String, required: true },
+  longTitle: String,
   rows: { type: [rowSchema], required: true },
   sub: [String],
   tags: [String],

@@ -38,7 +38,6 @@ export const everythingToResource = (data: EverythingType): IResource => {
     case 'resource':
       return data;
     case 'miscLink':
-      console.log(data);
       throw new Error(`Link cannot be converted into a resource`);
   }
 };
@@ -104,13 +103,9 @@ export const getDataByCategory = async (
     tags: category._id,
   })) as EverythingType[];
   if (filterFn) {
-    // console.log('before filter');
-    // console.log(data);
     data = data.filter(filterFn);
   }
   if (amount) {
-    // console.log('called');
-    // console.log(data);
     return data.slice(0, amount);
   }
   return data;
@@ -126,7 +121,6 @@ export const getLinksByCategory = async (
   const data = (await MiscLinks.find({
     tags: category._id,
   })) as ResourceLink[];
-  console.log(data);
   return data;
 };
 
@@ -236,6 +230,7 @@ export const getDataByID = async (
       return {
         _id: data._id,
         title: data.title,
+        longTitle: data.longTitle,
         color: data.color,
         rows: data.rows,
         pageType: data.pageType,
@@ -250,6 +245,7 @@ export const getDataByID = async (
       return {
         _id: data._id,
         title: data.title,
+        longTitle: data.longTitle,
         color: data.color,
         rows: data.rows,
         pageType: data.pageType,
@@ -267,6 +263,7 @@ export const getDataByID = async (
       return {
         _id: data._id,
         title: data.title,
+        longTitle: data.longTitle,
         color: data.color,
         rows: data.rows,
         pageType: data.pageType,

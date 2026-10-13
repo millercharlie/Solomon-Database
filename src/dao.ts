@@ -1,5 +1,11 @@
 import { IResource, ResourceLink, Resources } from '../models/Resources';
-import { Bible, GlossaryPage, ICategory, IPage } from '../models/Pages';
+import {
+  Bible,
+  GlossaryPage,
+  ICategory,
+  IPage,
+  SidebarItem,
+} from '../models/Pages';
 import {
   findCategoryById,
   getCategoriesByPageAndType,
@@ -8,11 +14,13 @@ import {
   getTheologyData,
   getTopicData,
   getCommentaryData,
+  getApologeticsData,
 } from './pageLogic';
 import { categoryType, pageType } from './enums';
 import search from './search';
 import { getBibleBookData, getBibleInfoData } from './utils';
 import { getYoutubeDataForCreator, YouTubeData } from './youtube';
+import { getSidebarData } from './sidebar';
 
 interface SolomonDao {
   getAllResources(): Promise<IResource[]>;
@@ -30,6 +38,7 @@ interface SolomonDao {
   ): Promise<ICategory[]>;
   search(query: string): Promise<ResourceLink[]>;
   getYoutubeDataForCreator(userId: string): Promise<YouTubeData>;
+  getSidebarData(pageId: pageType): Promise<SidebarItem[] | null>;
 }
 
 /**
@@ -54,6 +63,9 @@ class SolomonDaoImplementation implements SolomonDao {
   }
   async getCommentary(): Promise<IPage> {
     return getCommentaryData();
+  }
+  async getApologetics(): Promise<IPage> {
+    return getApologeticsData();
   }
   async getGlossary(): Promise<GlossaryPage> {
     return getGlossaryData();
@@ -80,6 +92,12 @@ class SolomonDaoImplementation implements SolomonDao {
   async search(query: string): Promise<ResourceLink[]> {
     return search(query);
   }
+  async getSidebarData(pageType: pageType): Promise<SidebarItem[] | null> {
+    const data = getSidebarData(pageType);
+    if (!data) return null;
+    return data;
+  }
+
   async getYoutubeDataForCreator(userId: string): Promise<YouTubeData> {
     return getYoutubeDataForCreator(userId);
   }

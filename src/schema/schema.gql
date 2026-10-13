@@ -99,6 +99,7 @@ type SidebarItem {
 type Page {
   _id: String!
   title: String!
+  longTitle: String
   color: String
   rows: [Row]!
   pageType: PageType!

@@ -2,7 +2,7 @@ import { categoryType, pageType } from '../src/enums';
 
 const categories: Record<
   pageType,
-  { _id: string; pretty: string; description?: string; type: categoryType }[]
+  { _id: string; pretty: string; shortDesc?: string; type: categoryType }[]
 > = {
   [pageType.dashboard]: [
     {
@@ -40,8 +40,7 @@ const categories: Record<
     {
       _id: 'christophanies',
       pretty: 'Christophanies',
-      description:
-        'Studies manifestations of Jesus Christ in the Old Testament.',
+      shortDesc: 'Studies manifestations of Jesus Christ in the Old Testament.',
       type: categoryType.list,
     },
     {
@@ -85,7 +84,45 @@ const categories: Record<
       type: categoryType.card,
     },
   ],
-  apologetics: [],
+  apologetics: [
+    {
+      _id: 'apologetics_popular',
+      pretty: 'Popular Topics',
+      type: categoryType.list,
+    },
+    {
+      _id: 'apologetics_overview',
+      pretty: 'High-Level Apologetics',
+      type: categoryType.list,
+    },
+    {
+      _id: 'apologetics_pentateuch',
+      pretty: 'The Pentateuch',
+      shortDesc: 'Discusses the truthfulness of the Pentateuch',
+      type: categoryType.list,
+    },
+    {
+      _id: 'apologetics_gospels',
+      pretty: 'The Gospels',
+      shortDesc: 'Defending the reliability of the Gospels',
+      type: categoryType.list,
+    },
+    {
+      _id: 'apologetics_podcast',
+      pretty: 'Podcasts',
+      type: categoryType.list,
+    },
+    {
+      _id: 'apologetics_online',
+      pretty: 'Online Apologetics',
+      type: categoryType.card,
+    },
+    {
+      _id: 'early_christian_apologists',
+      pretty: 'Early Christian Apologists',
+      type: categoryType.card,
+    },
+  ],
   [pageType.commentary]: [
     {
       _id: 'verse_by_verse_commentary',

@@ -80,6 +80,7 @@ export type Page = {
   _id: Scalars['String']['output'];
   color?: Maybe<Scalars['String']['output']>;
   longDesc?: Maybe<Scalars['String']['output']>;
+  longTitle?: Maybe<Scalars['String']['output']>;
   needsHelp?: Maybe<Scalars['Boolean']['output']>;
   pageType: PageType;
   related?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
@@ -405,6 +406,7 @@ export type PageResolvers<ContextType = any, ParentType extends ResolversParentT
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   longDesc?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  longTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   needsHelp?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   pageType?: Resolver<ResolversTypes['PageType'], ParentType, ContextType>;
   related?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;

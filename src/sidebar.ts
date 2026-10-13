@@ -1,4 +1,5 @@
 import { SidebarItem } from '../models/Pages';
+import { pageType } from './enums';
 
 export const defaultSidebar: SidebarItem[] = [
   {
@@ -128,3 +129,33 @@ export const defaultSidebar: SidebarItem[] = [
     ],
   },
 ];
+
+const getDasboardSidebarData = (): SidebarItem[] => {
+  return defaultSidebar;
+};
+const getApologeticsSidebarData = (): SidebarItem[] => {
+  return defaultSidebar;
+};
+
+/**
+ * Retrieves the sidebar information for a given page type.
+ */
+export const getSidebarData = (pt: pageType): SidebarItem[] | undefined => {
+  switch (pt) {
+    case pageType.dashboard:
+      return getDasboardSidebarData();
+    case pageType.commentary:
+    case pageType.apologetics:
+      return getApologeticsSidebarData();
+    case pageType.bibleBook:
+    case pageType.topic:
+    case pageType.about:
+    case pageType.add:
+    case pageType.glossary:
+    case pageType.notfound:
+    case pageType.theology:
+      return undefined;
+    default:
+      return undefined;
+  }
+};
