@@ -1,6 +1,5 @@
 import { resourceType, pageType, categoryType, badges } from './enums';
 import {
-  Bible,
   GlossaryData,
   GlossaryItem,
   GlossaryPage,
@@ -201,8 +200,6 @@ const buildPageRows = async (pageType: pageType): Promise<IRow[]> => {
     })
   );
 
-  console.log(row1Data);
-
   // Row 1 will only contain lists
   const row1: IRow = {
     _id: 'row1',
@@ -292,6 +289,7 @@ export const getDashboardData = async (): Promise<IPage> => {
     _id: 'dashboard',
     title: 'Dashboard',
     pageType: pageType.dashboard, // Dashboard will not have a description provided since it is hardcoded
+    color: '#329f82',
     rows: parsedRows,
     sidebarItems: getSidebarData(pageType.dashboard),
   };
@@ -306,6 +304,7 @@ export const getTheologyData = async (): Promise<IPage> => {
     _id: 'theology',
     title: 'Theology',
     pageType: pageType.theology,
+    color: '#9f3280',
     longDesc:
       'Theology is the study of aspects of Scripture and God. Theologians pour over original manuscripts of the Bible to determine the precise meaning of certain passages or phrases. Theologians ask questions such as "what is the nature of God?" and "was Noah\'s flood localized to the Middle East or globally?". Below, you will find some resources on certain topics, in addition to sections of the Bible.',
     rows,
@@ -322,6 +321,7 @@ export const getCommentaryData = async (): Promise<IPage> => {
     _id: 'commentary',
     title: 'Bible Commentary',
     pageType: pageType.commentary,
+    color: '#3eb963',
     longDesc:
       "The ESV Bible contains 756,846 words. Scholars have spent the past few thousand years trying to discern and truly understand every one of these words of God's divine speech in the form of Scripture. While the Bible remains the greatest and most popular book in history, many people, indeed most, don't really understand its contents. Verses are thrown around without context and its words are easily twisted by malicious actors. There is a greater need than ever to truly understand Scripture with the context of scholarship, church history, and orthodoxy.\n\nAnd while none of these can answer every single question we might have, many of the most common and misunderstood verses have clearer implications than ever. And as time goes on, we come ever closer to obtaining a richer understanding of Scripture than many of our predecessors had.\n\nBut, what exactly does the Bible say? What is the overarching message of Scripture? How much is it really about Jesus? This page contains commentary relating to every book of Scripture. Each book has its own page with apologetics, theology, and commentary resources to dive deeper.",
     rows,
@@ -338,6 +338,7 @@ export const getApologeticsData = async (): Promise<IPage> => {
     _id: 'apologetics',
     title: 'Apologetics',
     pageType: pageType.apologetics,
+    color: '#c26429',
     longDesc:
       'Apologetics is the study of the truthfulness of Scripture and Christianity. This encapsulates answering common questions such as “does God exist?” and “did Jesus really rise from the dead?” Those who study apologetics, called apologists, use varying philosophical, scientific, historical, and logical arguments to defend the faith.',
     rows,

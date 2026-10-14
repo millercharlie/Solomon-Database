@@ -90,19 +90,6 @@ export default [
   },
 
   {
-    _id: 'atonement',
-    title: 'The Atonement',
-    pageType: 'topic',
-    color: '#45d5f5',
-    shortDesc:
-      "There are various theories which explain what was accomplished during Jesus's death and resurrection.",
-    longDesc:
-      'The impact of the death and resurrection of Jesus Christ for the forgiveness of sins has various interpretations by scholars. These atonement theories do not necessarily contradict each other.\n\nPenal Substitutionary Atonement (PSA) is the most popular atonement theory in the United States, while some such as Christus Victor, Ransom Theory, and Recapitulation are other interpretations of the atoning work of Christ.\n\nBut, what do these atonement theories mean? How are they different? Are they all correct? This page houses resources about each mainstream atonement theory and discusses differences among them.',
-    rows: [],
-    related: ['Jesus', 'crucifixion'],
-  },
-
-  {
     _id: 'trinity',
     title: 'The Trinity',
     pageType: 'topic',
@@ -439,6 +426,189 @@ export default [
     ],
     tags: ['paul', 'nt', 'commentary_by_category'],
     related: ['acts', 'gospels', 'end_times'],
+  },
+  {
+    _id: 'creation',
+    title: 'Creation',
+    pageType: 'topic',
+    color: '#82cf34',
+    shortDesc: 'Explores the creation of the universe in Genesis.',
+    longDesc:
+      'The creation account recorded in Genesis is one of the most debated in all of Scripture. It describes how God created the Universe from nothing, and follows the story of Adam and Eve, living in perfect covenant with God in the Garden of Eden. Adam and Eve proceed to sin, and from this fall mankind can no longer be in perfect covenant with God.\n\nBut, which view of Genesis is correct? What even are these views? Who wrote this information? This page contains primarily apologetic and theological resources about the account in Genesis. It explores various debates, scholarship, and definite conclusions within the book.',
+    rows: [
+      {
+        _id: 'row1',
+        type: 'list',
+        content: [
+          {
+            _id: 'creation_historic_views',
+            name: 'Historic Views',
+            type: 'theology',
+            links: [],
+          },
+          {
+            _id: 'creation_and_science',
+            name: 'Does Creation Contradict Science?',
+            type: 'apologetics',
+            links: [],
+          },
+          {
+            _id: 'creation_why',
+            name: 'Why did God create?',
+            type: 'question',
+            links: [],
+          },
+          {
+            _id: 'creation_myths',
+            name: 'Christian v. Pagan Creation Stories',
+            type: 'commentary',
+            links: [],
+          },
+        ],
+      },
+      {
+        _id: 'creation_debates',
+        title: 'Common Debates',
+        type: 'card',
+        content: [
+          'yec_v_oec',
+          'evolution',
+          'global_v_local_flood',
+          'adam_and_eve',
+        ],
+      },
+    ],
+    tags: ['paul', 'nt', 'commentary_by_category'],
+    related: ['God', 'genesis', 'atonement'],
+    sub: ['yec_v_oec', 'flood', 'adam_and_eve', 'eden', 'fall'],
+  },
+
+  {
+    _id: 'atonement',
+    title: 'The Atonement',
+    pageType: 'topic',
+    color: '#9b2323',
+    shortDesc: "Explores the significance of Jesus' death on the cross.",
+    longDesc:
+      "Every Christian in history has recognized that Jesus' death on the cross led to the forgiveness of our sins. But, there is debate about the specific mechanism that allowed for our reconciliation with God. Penal Substitionary Atonement (PSA) is the most popular within the United States, but others such as Christus Victor, Recapitulation, and Ransom Theory are other interpretations of the atoning work of Christ. And, while they can harmonize together, some reject one theory for another.\n\nBut, which atonement theory is correct? What do these terms even mean? This page provides a comprehensive look at various atonement theories throughout church history, and explores how they may work together. The first row provides resources that look into each theory in-depth, while the others contain debates and literature about their co-existence.",
+    rows: [
+      {
+        _id: 'row1',
+        type: 'list',
+        content: [
+          {
+            _id: 'psa',
+            name: 'Penal Substitutionary Atonement',
+            type: 'theology',
+            links: [],
+          },
+          {
+            _id: 'christus_victor',
+            name: 'Christus Victor',
+            type: 'theology',
+            links: [],
+          },
+          {
+            _id: 'ransom_theory',
+            name: 'Ransom Theory',
+            type: 'theology',
+            links: [],
+          },
+          {
+            _id: 'recapitulation',
+            name: 'Recapitulation',
+            type: 'theology',
+            links: [],
+          },
+        ],
+      },
+      {
+        _id: 'atonement_theologians',
+        title: 'Atonement Theologians',
+        type: 'card',
+        content: [],
+      },
+    ],
+    tags: [],
+    related: ['Jesus', 'crucifixion', 'Jesus_resurrection', 'Gospel'],
+  },
+
+  {
+    _id: 'paul',
+    title: 'Paul the Apostle',
+    pageType: 'topic',
+    color: '#239b79',
+    shortDesc:
+      'Investigates Paul the Apostle, who wrote much of the New Testament.',
+    longDesc:
+      "It is difficult to understate the significance of Paul the Apostle in Christianity. Originally Saul of Tarsus, he was a zealous Jew who brutally persecuted the early church before seeing Christ on the road to Damascus. After this miraculous encounter, Paul converted to Christianity and began arguing and defending the Christian faith. He wrote much of the New Testament in various letters to churches and contemporaries.\n\nPaul is often a punching bag for skeptics and Muslims who claim that his teachings contradict those of Christ or the other apostles. Particularly because he wrote so much of the New Testament, people often wish to discredit the Bible or twist it for their own gain.\n\nBut, has Paul's teaching been misunderstood? Who was Paul anyways? Can we trust his work? This page contains resources and other topics about the life and work of the Apostle Paul, and seeks to guide viewers to the conclusion that his work is built upon Christ and orthodox Christian beliefs.",
+    rows: [
+      {
+        _id: 'row1',
+        type: 'list',
+        content: [
+          {
+            _id: 'paul_before_conversion',
+            name: 'Saul of Tarsus',
+            type: 'theology',
+            links: [],
+          },
+          {
+            _id: 'paul_conversion',
+            name: "Paul's Conversion to Christianity",
+            type: 'theology',
+            links: [],
+          },
+          {
+            _id: 'paul_ministry',
+            name: "Paul's Ministry",
+            type: 'theology',
+            links: [],
+          },
+          {
+            _id: 'paul_martyr',
+            name: 'The Martyrdom of Paul',
+            type: 'theology',
+            links: [],
+          },
+        ],
+      },
+      {
+        _id: 'row2',
+        type: 'list',
+        content: [
+          {
+            _id: 'paul_letters_apologetics',
+            name: 'Did Paul write his letters?',
+            type: 'apologetics',
+            links: [],
+          },
+          {
+            _id: 'paul_roman_spy',
+            name: 'Was Paul a Roman Spy?',
+            type: 'apologetics',
+            links: [],
+          },
+          {
+            _id: 'paul_v_james',
+            name: 'Paul v. James',
+            shortDesc: 'Does Paul contradict James?',
+            type: 'apologetics',
+            links: [],
+          },
+          {
+            _id: 'paul_v_Jesus',
+            name: 'Paul v. Jesus',
+            shortDesc: 'Does Paul Contradict Jesus?',
+            type: 'apologetics',
+            links: [],
+          },
+        ],
+      },
+    ],
+    tags: [],
+    sub: ['pauline_letters', '1_timothy', 'philemon', '2_corinthians'],
+    related: ['Jesus', 'acts', 'early_church'],
   },
 ];
 
